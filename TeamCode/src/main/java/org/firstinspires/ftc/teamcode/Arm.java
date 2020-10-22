@@ -45,6 +45,29 @@ public class Arm {
      */
 
 
+    public void test(Gamepad gamepad) {
+
+        double encoderValue = getEncoder();
+
+        // Get joystick values from gamepad
+        double power  = gamepad.left_stick_y;
+
+        double speedLimit = RobotMap.ARM_SPEED_UP;
+        if (power > 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
+
+        // Limit speed of arm
+        power *= speedLimit;
+
+        setPower(power);
+
+        //output the encoder value//
+        if (RobotMap.DISPLAY_ENCODER_VALUES) {
+            telemetry.addData("Arm Encoder", encoderValue);
+            telemetry.addData("Arm Goal", encoderGoal);
+        }
+
+    }
+
     public void manual(Gamepad gamepad) {
 
         double encoderValue = getEncoder();
