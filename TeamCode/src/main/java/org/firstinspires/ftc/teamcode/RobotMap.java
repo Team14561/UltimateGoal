@@ -36,4 +36,10 @@ public class RobotMap {
     public static final double DEADZONE = 0.05;
     public static final double AUTO_ARM_SPEED = 0.17;
 
+    //FlyWheel Parameters
+    public static final String FLYWHEEL_MOTOR = "flywheel_motor";
+    public static final DcMotor.Direction FLYWHEEL_DIRECTION = DcMotor.Direction.FORWARD;
+    public static final double FLYWHEEL_SPEED_IN = -0.25;
+    public static final double FLYWHEEL_SPEED_OUT = 0.95;
+
 }
