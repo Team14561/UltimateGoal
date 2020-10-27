@@ -27,12 +27,14 @@ public class Sweeper {
         this.telemetry = telemetry;
 
         // Assign hardware objects
+        /*
         clawServo = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO);
         clawServo.setPosition(RobotMap.SERVO_ANGLE_DEFAULT);
         clawServoLeft = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO_LEFT);
         clawServoLeft.setPosition(RobotMap.SERVO_ANGLE_DEFAULT_LEFT);
         clawServoRight = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO_RIGHT);
         clawServoRight.setPosition(RobotMap.SERVO_ANGLE_DEFAULT_RIGHT);
+        */
     }
 
     /**
@@ -42,6 +44,7 @@ public class Sweeper {
      */
     private boolean clawOpen = false;
     private boolean aReleased = true;
+/*
     public void buttonServo(Gamepad gamepad) {
 
         if (gamepad.a) {
@@ -60,6 +63,7 @@ public class Sweeper {
 
         servoAngle = safetyCheck(servoAngle);
         clawServo.setPosition(servoAngle);
+
    }
 
     private double safetyCheck(double inp) {
@@ -79,5 +83,5 @@ public class Sweeper {
 
     }
 
-
+*/
 }

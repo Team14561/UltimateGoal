@@ -26,12 +26,12 @@ public class RobotMap {
     public static final int ENCODER_TOLERANCE = 10;
 
     //Arm Parameters
-    public static final String LEFT_ARM_MOTOR = "arm_left";
-    public static final String RIGHT_ARM_MOTOR = "arm_right";
+    public static final String LEFT_ARM_MOTOR = "arm_lifter";
+    public static final String RIGHT_ARM_MOTOR = "arm_lifter_encoder";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double ARM_SPEED_UP = 0.2;
-    public static final double ARM_SPEED_DOWN = 0.2;
+    public static final double ARM_SPEED_UP = 0.6;
+    public static final double ARM_SPEED_DOWN = 0.6;
     public static final double kP = 0.05;
     public static final double DEADZONE = 0.05;
     public static final double AUTO_ARM_SPEED = 0.17;
@@ -39,7 +39,10 @@ public class RobotMap {
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
     public static final DcMotor.Direction FLYWHEEL_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double FLYWHEEL_SPEED_IN = -0.25;
-    public static final double FLYWHEEL_SPEED_OUT = 0.95;
+    public static final double FLYWHEEL_SPEED_IN = 0.5;
+    public static final double FLYWHEEL_SPEED_OUT = -0.95;
+
+    //Pusher Parameters
+    public static final String PUSHER_MOTOR = "pusher_arm";
 
 }
