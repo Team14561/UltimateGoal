@@ -91,7 +91,7 @@ public class FlyWheel {
     }
 
     public int getEncoder () {
-        return motor.getCurrentPosition();
+        return RobotMap.REVERSE_FLYWHEEL_ENCODER_VALUE * (motor.getCurrentPosition());
     }
 
 

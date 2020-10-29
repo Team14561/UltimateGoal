@@ -85,6 +85,7 @@ public class TankDrive extends OpMode
         arm.test(gamepad2);
         flywheel.manual(gamepad2);
         sweeper.buttonServo(gamepad2);
+        pusher.manuel(gamepad2);
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {

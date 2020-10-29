@@ -49,11 +49,19 @@ public class DriveTrain {
         rightEncoder = rightBackMotor;
 
         //Set the encoder starting positions
-        leftZero = leftEncoder.getCurrentPosition();
-        rightZero = rightEncoder.getCurrentPosition();
+        rightZero = getEncoderRight();
+        leftZero = getEncoderLeft();
 
         //Set up gyroscope
         //gyro = hardwareMap.get(BNO055IMU.class, "imu");
+    }
+
+    public int getEncoderRight () {
+        return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (rightEncoder.getCurrentPosition());
+    }
+
+    public int getEncoderLeft () {
+        return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (leftEncoder.getCurrentPosition());
     }
 
     public void gyroInit(){

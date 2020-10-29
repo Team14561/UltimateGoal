@@ -58,7 +58,7 @@ public class PusherMotor {
 
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
-            telemetry.addData("Elevator Encoder", getEncoder());
+            telemetry.addData("Pusher Encoder", getEncoder());
         }
 
     }
@@ -79,7 +79,7 @@ public class PusherMotor {
     }
 
     public int getEncoder () {
-        return motor.getCurrentPosition();
+        return RobotMap.REVERSE_PUSHER_ENCODER_VALUE * (motor.getCurrentPosition());
     }
 
 
