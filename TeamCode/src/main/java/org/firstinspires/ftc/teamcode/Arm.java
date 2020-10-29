@@ -119,7 +119,7 @@ public class Arm {
     }
 
    public int getEncoder () {
-        return encoderMotor.getCurrentPosition();
+        return RobotMap.REVERSE_ARM_ENCODER_VALUE*encoderMotor.getCurrentPosition();
    }
 
 

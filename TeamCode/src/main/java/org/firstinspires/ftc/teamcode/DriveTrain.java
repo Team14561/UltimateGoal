@@ -117,11 +117,10 @@ public class DriveTrain {
 
         // Output Encoder Values
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
-             telemetry.addData("Left Encoder", leftEncoder.getCurrentPosition());
-             telemetry.addData("Right Encoder", rightEncoder.getCurrentPosition());
+             telemetry.addData("Left Encoder", getEncoderLeft());
+             telemetry.addData("Right Encoder", getEncoderRight());
             // telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
         }
-
     }
 
     public void mecanumDrive(double leftPower, double rightPower, double strafeValue){
@@ -170,9 +169,9 @@ public class DriveTrain {
 
     public void arcadeDrive(Gamepad gamepad){
         double rotation = gamepad.right_stick_x;
-        double leftPower = gamepad.left_stick_y + rotation;
-        double rightPower = gamepad.left_stick_y - rotation;
-        double strafeValue = gamepad.left_stick_x;
+        double leftPower = gamepad.left_stick_y - rotation;
+        double rightPower = gamepad.left_stick_y + rotation;
+        double strafeValue = -gamepad.left_stick_x;
 
 
         // Reverse joystick values if requested

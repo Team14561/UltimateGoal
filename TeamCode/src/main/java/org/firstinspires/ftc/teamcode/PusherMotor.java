@@ -63,7 +63,7 @@ public class PusherMotor {
 
     }
 
-    private void setPower(double power  ){
+    private void setPower(double power){
         // Make sure power levels are within expected range
         power = safetyCheck(power);
 

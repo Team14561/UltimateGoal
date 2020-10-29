@@ -14,7 +14,7 @@ public class RobotMap {
     public static final String RIGHT_BACK_MOTOR = "right_back_drive";
     public static final DcMotor.Direction LEFT_DRIVE_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_DRIVE_DIRECTION = DcMotor.Direction.REVERSE;
-    public static final int REVERSE_DRIVETRAIN_ENCODER_VALUE = -1
+    public static final int REVERSE_DRIVETRAIN_ENCODER_VALUE = -1;
 
     //TankDrive Parameters
     public static final Boolean DISPLAY_MOTOR_VALUES = true;
@@ -36,19 +36,21 @@ public class RobotMap {
     public static final double kP = 0.05;
     public static final double DEADZONE = 0.05;
     public static final double AUTO_ARM_SPEED = 0.17;
-    public static final int REVERSE_ARM_ENCODER_VALUE = -1
+    public static final int REVERSE_ARM_ENCODER_VALUE = -1;
+    public static final int REVERSE_ARM_DIRECTION  = -1;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
     public static final DcMotor.Direction FLYWHEEL_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double FLYWHEEL_SPEED_IN = 0.5;
     public static final double FLYWHEEL_SPEED_OUT = -0.95;
-    public static final int REVERSE_FLYWHEEL_ENCODER_VALUE = -1
+    public static final int REVERSE_FLYWHEEL_ENCODER_VALUE = -1;
 
     //Sweeper Parameters
     public static final String SWEEPER_SERVO = "sweeper_servo";
-    public static final double SERVO_OPEN = 0.55;
-    public static final double SERVO_CLOSED = 0.22;
+    public static final double SERVO_OPEN = 0.1;
+    public static final double SERVO_CLOSED = 0.7;
+    public static final double SERVO_MID = 0.4;
     public static final double MINIMUM_SERVO_POSITION = 0.0;
     public static final double MAXIMUM_SERVO_POSITION = 1.0;
     public static final double SERVO_ANGLE_DEFAULT = SERVO_CLOSED;
@@ -57,7 +59,7 @@ public class RobotMap {
     public static final String PUSHER_MOTOR = "pusher_arm";
     public static final DcMotor.Direction PUSHER_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double PUSHER_SPEED = 0.5;
-    public static final int REVERSE_PUSHER_ENCODER_VALUE = -1
+    public static final int REVERSE_PUSHER_ENCODER_VALUE = -1;
 
 
 }
