@@ -46,6 +46,7 @@ public class Sweeper {
             if (aReleased) clawOpen = !clawOpen;
             aReleased = false;
             xEnabled = false;
+
         }
         else{
             aReleased = true;
