@@ -160,6 +160,41 @@ public class DriveTrain {
 
     }
 
+    public void arcadeDrive(Gamepad gamepad){
+        double rotation = gamepad.right_stick_x;
+        double leftPower = gamepad.left_stick_y + rotation;
+        double rightPower = gamepad.left_stick_y - rotation;
+        double strafeValue = gamepad.left_stick_x;
+
+
+        // Reverse joystick values if requested
+        if (RobotMap.REVERSE_JOYSTICKS) {
+            leftPower *= -1.0;
+            rightPower *= -1.0;
+        }
+
+        if (gamepad.left_bumper) {
+            highSpeed = false;
+
+        }
+        else if (gamepad.right_bumper){
+            highSpeed = true;
+        }
+
+
+
+        mecanumDrive(leftPower, rightPower, strafeValue);
+
+        // Output Encoder Values
+        if (RobotMap.DISPLAY_ENCODER_VALUES) {
+            telemetry.addData("Left Encoder", leftEncoder.getCurrentPosition());
+            telemetry.addData("Right Encoder", rightEncoder.getCurrentPosition());
+            // telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
+        }
+
+
+    }
+
 
     public void tankDrive(Gamepad gamepad) {
 
