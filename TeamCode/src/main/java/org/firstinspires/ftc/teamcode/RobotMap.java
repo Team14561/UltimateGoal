@@ -52,7 +52,7 @@ public class RobotMap {
 
     //Pusher Parameters
     public static final String PUSHER_MOTOR = "pusher_arm";
-    public static final DcMotor.Direction.FORWARD;
+    public static final PUSHER_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double PUSHER_SPEED = 0.5;
 
 
