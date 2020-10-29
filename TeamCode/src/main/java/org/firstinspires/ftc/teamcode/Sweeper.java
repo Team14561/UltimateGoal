@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -12,9 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Sweeper {
 
     // Class variables
-    Servo clawServo;
-    Servo clawServoLeft;
-    Servo clawServoRight;
+    Servo sweeperServo;
     Telemetry telemetry;
 
     /**
@@ -27,14 +26,10 @@ public class Sweeper {
         this.telemetry = telemetry;
 
         // Assign hardware objects
-        /*
-        clawServo = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO);
-        clawServo.setPosition(RobotMap.SERVO_ANGLE_DEFAULT);
-        clawServoLeft = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO_LEFT);
-        clawServoLeft.setPosition(RobotMap.SERVO_ANGLE_DEFAULT_LEFT);
-        clawServoRight = hardwareMap.get(Servo.class, RobotMap.CLAW_SERVO_RIGHT);
-        clawServoRight.setPosition(RobotMap.SERVO_ANGLE_DEFAULT_RIGHT);
-        */
+
+        sweeperServo = hardwareMap.get(Servo.class, RobotMap.SWEEPER_SERVO);
+        sweeperServo.setPosition(RobotMap.SERVO_ANGLE_DEFAULT);
+
     }
 
     /**
@@ -44,7 +39,7 @@ public class Sweeper {
      */
     private boolean clawOpen = false;
     private boolean aReleased = true;
-/*
+
     public void buttonServo(Gamepad gamepad) {
 
         if (gamepad.a) {
@@ -62,7 +57,7 @@ public class Sweeper {
         }
 
         servoAngle = safetyCheck(servoAngle);
-        clawServo.setPosition(servoAngle);
+        sweeperServo.setPosition(servoAngle);
 
    }
 
@@ -73,15 +68,5 @@ public class Sweeper {
         return out;
     }
 
-    public void open(){
-        clawServo.setPosition(RobotMap.SERVO_OPEN);
 
-    }
-
-    public void close(){
-        clawServo.setPosition(RobotMap.SERVO_CLOSED);
-
-    }
-
-*/
 }

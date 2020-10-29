@@ -46,6 +46,7 @@ public class TankDrive extends OpMode
     private DriveTrain drivetrain;
     private Arm arm;
     private FlyWheel flywheel;
+    private Sweeper sweeper;
 
 
     /*
@@ -56,6 +57,7 @@ public class TankDrive extends OpMode
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
         flywheel = new FlyWheel(hardwareMap,telemetry);
+        sweeper = new Sweeper(hardwareMap, telemetry);
     }
 
     /*
@@ -82,6 +84,7 @@ public class TankDrive extends OpMode
         drivetrain.mecanumDrive(gamepad1);
         arm.test(gamepad2);
         flywheel.manual(gamepad2);
+        sweeper.buttonServo(gamepad2);
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {

@@ -42,6 +42,14 @@ public class RobotMap {
     public static final double FLYWHEEL_SPEED_IN = 0.5;
     public static final double FLYWHEEL_SPEED_OUT = -0.95;
 
+    //Sweeper Parameters
+    public static final String SWEEPER_SERVO = "sweeper_servo";
+    public static final double SERVO_OPEN = 0.55;
+    public static final double SERVO_CLOSED = 0.22;
+    public static final double MINIMUM_SERVO_POSITION = 0.0;
+    public static final double MAXIMUM_SERVO_POSITION = 1.0;
+    public static final double SERVO_ANGLE_DEFAULT = SERVO_CLOSED;
+
     //Pusher Parameters
     public static final String PUSHER_MOTOR = "pusher_arm";
     public static final DcMotor.Direction.FORWARD;
