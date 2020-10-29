@@ -50,7 +50,7 @@ public class Arm {
         double encoderValue = getEncoder();
 
         // Get joystick values from gamepad
-        double power  = gamepad.left_stick_y;
+        double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
 
         double speedLimit = RobotMap.ARM_SPEED_UP;
         if (power > 0) speedLimit = RobotMap.ARM_SPEED_DOWN;

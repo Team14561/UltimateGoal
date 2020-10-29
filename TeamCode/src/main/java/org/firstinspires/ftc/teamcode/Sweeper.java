@@ -39,21 +39,22 @@ public class Sweeper {
      */
     private boolean clawOpen = false;
     private boolean aReleased = true;
+    private boolean xEnabled = false;
 
     public void buttonServo(Gamepad gamepad) {
-
         if (gamepad.a) {
             if (aReleased) clawOpen = !clawOpen;
             aReleased = false;
+            xEnabled = false;
         }
         else{
             aReleased = true;
         }
-        double servoAngle = (clawOpen) ? RobotMap.SERVO_OPEN : RobotMap.SERVO_CLOSED;
+        double servoAngle = (clawOpen) ? RobotMap.SERVO_MID : RobotMap.SERVO_CLOSED;
 
-        if (gamepad.b){
+        if (gamepad.x){
             servoAngle = RobotMap.SERVO_OPEN;
-
+            xEnabled = true;
         }
 
         servoAngle = safetyCheck(servoAngle);
