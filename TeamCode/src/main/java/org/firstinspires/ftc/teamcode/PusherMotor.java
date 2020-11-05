@@ -14,6 +14,7 @@ public class PusherMotor {
     // Class variables
     DcMotor motor;
     Telemetry telemetry;
+    double encoderStart;
 
 
     /**
@@ -32,6 +33,7 @@ public class PusherMotor {
         motor.setDirection(RobotMap.PUSHER_DIRECTION);
 
         //Set the encoder starting position
+        encoderStart = getEncoder();
 
     }
 
@@ -40,16 +42,27 @@ public class PusherMotor {
      *
      * @param gamepad The gamepad from which to read joystick values
      */
-
+    boolean yPressed = false;
+    double encoderGoal;
 
     public void manual(Gamepad gamepad) {
         double speedLimit = RobotMap.PUSHER_SPEED;
 
-        // Get joystick values from gamepad
-        //double power  = gamepad.right_stick_y;
-
         double power = gamepad.right_trigger - gamepad.left_trigger;
 
+        if(gamepad.y) {
+            yPressed = true;
+            encoderGoal = encoderStart;
+        }
+
+        if(yPressed){
+            double error = encoderGoal - getEncoder();
+            power = RobotMap.PUSHER_KP * error;
+            if(error < RobotMap.ENCODER_TOLERANCE){
+                yPressed = false;
+            }
+
+        }
 
         // Limit speed of arm
         power *= speedLimit;

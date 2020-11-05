@@ -62,6 +62,7 @@ public class RobotMap {
     public static final DcMotor.Direction PUSHER_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double PUSHER_SPEED = 0.5;
     public static final int REVERSE_PUSHER_ENCODER_VALUE = -1;
+    public static final double PUSHER_KP = 0.05;
 
 
 }
