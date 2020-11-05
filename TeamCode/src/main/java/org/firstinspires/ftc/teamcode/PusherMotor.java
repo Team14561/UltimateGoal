@@ -37,14 +37,13 @@ public class PusherMotor {
 
     }
 
+    boolean yPressed = false;
+    double encoderGoal;
     /**
      * Set the arm motor power for both left and right motors
      *
      * @param gamepad The gamepad from which to read joystick values
      */
-    boolean yPressed = false;
-    double encoderGoal;
-
     public void manual(Gamepad gamepad) {
         double speedLimit = RobotMap.PUSHER_SPEED;
 
@@ -58,7 +57,8 @@ public class PusherMotor {
         if(yPressed){
             double error = encoderGoal - getEncoder();
             power = RobotMap.PUSHER_KP * error;
-            if(error < RobotMap.ENCODER_TOLERANCE){
+            power = safetyCheck(power);
+            if(Math.abs(error) < RobotMap.ENCODER_TOLERANCE){
                 yPressed = false;
             }
 
