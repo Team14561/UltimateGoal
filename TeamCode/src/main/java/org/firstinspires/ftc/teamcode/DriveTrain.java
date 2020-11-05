@@ -49,11 +49,19 @@ public class DriveTrain {
         rightEncoder = rightBackMotor;
 
         //Set the encoder starting positions
-        leftZero = leftEncoder.getCurrentPosition();
-        rightZero = rightEncoder.getCurrentPosition();
+        rightZero = getEncoderRight();
+        leftZero = getEncoderLeft();
 
         //Set up gyroscope
         //gyro = hardwareMap.get(BNO055IMU.class, "imu");
+    }
+
+    public int getEncoderRight () {
+        return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (rightEncoder.getCurrentPosition());
+    }
+
+    public int getEncoderLeft () {
+        return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (leftEncoder.getCurrentPosition());
     }
 
     public void gyroInit(){
@@ -109,11 +117,10 @@ public class DriveTrain {
 
         // Output Encoder Values
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
-             telemetry.addData("Left Encoder", leftEncoder.getCurrentPosition());
-             telemetry.addData("Right Encoder", rightEncoder.getCurrentPosition());
+             telemetry.addData("Left Encoder", getEncoderLeft());
+             telemetry.addData("Right Encoder", getEncoderRight());
             // telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
         }
-
     }
 
     public void mecanumDrive(double leftPower, double rightPower, double strafeValue){
@@ -156,6 +163,41 @@ public class DriveTrain {
         rightFrontMotor.setPower(rightFrontPower);
         leftBackMotor.setPower(leftBackPower);
         rightBackMotor.setPower(rightBackPower);
+
+
+    }
+
+    public void arcadeDrive(Gamepad gamepad){
+        double rotation = gamepad.right_stick_x;
+        double leftPower = gamepad.left_stick_y - rotation;
+        double rightPower = gamepad.left_stick_y + rotation;
+        double strafeValue = -gamepad.left_stick_x;
+
+
+        // Reverse joystick values if requested
+        if (RobotMap.REVERSE_JOYSTICKS) {
+            leftPower *= -1.0;
+            rightPower *= -1.0;
+        }
+
+        if (gamepad.left_bumper) {
+            highSpeed = false;
+
+        }
+        else if (gamepad.right_bumper){
+            highSpeed = true;
+        }
+
+
+
+        mecanumDrive(leftPower, rightPower, strafeValue);
+
+        // Output Encoder Values
+        if (RobotMap.DISPLAY_ENCODER_VALUES) {
+            telemetry.addData("Left Encoder", leftEncoder.getCurrentPosition());
+            telemetry.addData("Right Encoder", rightEncoder.getCurrentPosition());
+            // telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
+        }
 
 
     }

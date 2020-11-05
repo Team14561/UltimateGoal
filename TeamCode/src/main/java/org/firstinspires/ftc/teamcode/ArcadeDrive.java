@@ -39,8 +39,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Team 14561
  */
 
-@TeleOp(name="TankDrive", group="UltimateGoal")
-public class TankDrive extends OpMode
+@TeleOp(name="ArcadeDrive", group="UltimateGoal")
+public class ArcadeDrive extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
     private DriveTrain drivetrain;
@@ -83,7 +83,7 @@ public class TankDrive extends OpMode
      */
     @Override
     public void loop() {
-        drivetrain.mecanumDrive(gamepad1);
+        drivetrain.arcadeDrive(gamepad1);
         arm.test(gamepad2);
         flywheel.manual(gamepad2);
         sweeper.buttonServo(gamepad2);
