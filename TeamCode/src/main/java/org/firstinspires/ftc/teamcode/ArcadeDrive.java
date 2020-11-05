@@ -84,7 +84,7 @@ public class ArcadeDrive extends OpMode
     @Override
     public void loop() {
         drivetrain.arcadeDrive(gamepad1);
-        arm.test(gamepad2);
+        arm.manual(gamepad2);
         flywheel.manual(gamepad2);
         sweeper.buttonServo(gamepad2);
         pusher.manual(gamepad2);
