@@ -81,6 +81,10 @@ public class Arm {
         double speedLimit = RobotMap.ARM_SPEED_UP;
         if (power < 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
 
+        if(gamepad.y){
+            encoderGoal = RobotMap.SHOOTING_POSITION;
+        }
+
         if (Math.abs(power) < RobotMap.DEADZONE) {
             double error = encoderGoal - encoderValue;
             power = RobotMap.kP * error;

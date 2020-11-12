@@ -67,7 +67,7 @@ public class Sweeper {
         servoAngle = safetyCheck(servoAngle);
         sweeperServo.setPosition(servoAngle);
 
-   }
+   }6
 
     private double safetyCheck(double inp) {
         double out = inp;
