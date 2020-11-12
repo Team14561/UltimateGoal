@@ -58,7 +58,8 @@ public class Sweeper {
         }
 
 
-        if (gamepad.x){
+
+        if (gamepad.right_bumper){
             servoAngle = RobotMap.SERVO_OPEN;
             xEnabled = true;
         }
