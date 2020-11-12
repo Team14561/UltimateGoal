@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -16,6 +17,9 @@ public class FlyWheel {
     DcMotor motor;
     Telemetry telemetry;
     FlywheelState state;
+    double lastEncoder = 0.0;
+    double previousTime = 0.0;
+    ElapsedTime time;
 
     /**
      * Constructor for the drivetrain
@@ -35,6 +39,8 @@ public class FlyWheel {
         //Set FlyWheel initial state
         state = FlywheelState.STOP;
 
+        time = new ElapsedTime();
+        time.reset();
     }
 
     /**
@@ -67,11 +73,14 @@ public class FlyWheel {
 
         setPower(power);
 
-
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Flywheel Encoder", getEncoder());
+            telemetry.addData("Flywheel Speed", getSpeed());
         }
+
+        lastEncoder = getEncoder();
+        previousTime = time.time();
 
     }
 
@@ -92,6 +101,14 @@ public class FlyWheel {
 
     public int getEncoder () {
         return RobotMap.REVERSE_FLYWHEEL_ENCODER_VALUE * (motor.getCurrentPosition());
+    }
+
+
+
+    public double getSpeed(){
+        double deltaEncoder = getEncoder() - lastEncoder;
+        double deltaTime = time.time() - previousTime;
+        return (deltaEncoder / deltaTime);
     }
 
 
