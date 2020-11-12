@@ -7,6 +7,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.awt.Robot;
+
 /**
  * Class for controlling the Arm of an FTC robot.
  */
@@ -66,6 +68,8 @@ public class FlyWheel {
 
         if (state == FlywheelState.SHOOT) {
             power = RobotMap.FLYWHEEL_SPEED_OUT;
+            double error = RobotMap.SPEED_GOAL - getSpeed();
+            power += RobotMap.FLYWHEEL_KP * error;
         }
         else if (state == FlywheelState.INTAKE) {
             power = RobotMap.FLYWHEEL_SPEED_IN;

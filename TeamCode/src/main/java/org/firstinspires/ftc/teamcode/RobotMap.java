@@ -50,6 +50,8 @@ public class RobotMap {
     public static final double FLYWHEEL_SPEED_IN = 0.35;
     public static final double FLYWHEEL_SPEED_OUT = -0.95;
     public static final int REVERSE_FLYWHEEL_ENCODER_VALUE = -1;
+    public static final double SPEED_GOAL = 1900.0;
+    public static final double FLYWHEEL_KP = 0.003;
 
     //Sweeper Parameters
     public static final String SWEEPER_SERVO = "sweeper_servo";
