@@ -37,7 +37,7 @@ public class PusherMotor {
 
     }
 
-    boolean yPressed = false;
+    boolean buttonPressed = false;
     double encoderGoal;
     /**
      * Set the arm motor power for both left and right motors
@@ -49,17 +49,20 @@ public class PusherMotor {
 
         double power = gamepad.right_trigger - gamepad.left_trigger;
 
-        if(gamepad.y) {
-            yPressed = true;
+        if(gamepad.left_bumper) {
+            buttonPressed = true;
             encoderGoal = encoderStart;
         }
+        else if(Math.abs(power) > RobotMap.DEADZONE){
+            buttonPressed = false;
+        }
 
-        if(yPressed){
+        if(buttonPressed){
             double error = encoderGoal - getEncoder();
             power = RobotMap.PUSHER_KP * error;
             power = safetyCheck(power);
             if(Math.abs(error) < RobotMap.ENCODER_TOLERANCE){
-                yPressed = false;
+                buttonPressed = false;
             }
 
         }

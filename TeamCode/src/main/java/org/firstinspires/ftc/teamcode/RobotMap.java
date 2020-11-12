@@ -6,6 +6,7 @@ public class RobotMap {
 
     // Robot Parameters
     public static final Boolean DISPLAY_TIME = true;
+    public static final double DEADZONE = 0.05;
 
     // Drivetrain Parameters
     public static final String LEFT_FRONT_MOTOR = "left_front_drive";
@@ -24,7 +25,7 @@ public class RobotMap {
 
     //Encoder Parameters
     public static final Boolean DISPLAY_ENCODER_VALUES = true;
-    public static final int ENCODER_TOLERANCE = 10;
+    public static final int ENCODER_TOLERANCE = 20;
 
     //Arm Parameters
     public static final String LEFT_ARM_MOTOR = "arm_lifter";
@@ -33,7 +34,6 @@ public class RobotMap {
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double ARM_SPEED_UP = 0.35;
     public static final double ARM_SPEED_DOWN = 0.3;
-    public static final double DEADZONE = 0.05;
     public static final double AUTO_ARM_SPEED = 0.17;
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
