@@ -48,10 +48,10 @@ public class RobotMap {
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
     public static final DcMotor.Direction FLYWHEEL_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double FLYWHEEL_SPEED_IN = 0.35;
-    public static final double FLYWHEEL_SPEED_OUT = -0.95;
+    public static final double FLYWHEEL_SPEED_OUT = -0.85;
     public static final int REVERSE_FLYWHEEL_ENCODER_VALUE = -1;
     public static final double SPEED_GOAL = 1900.0;
-    public static final double FLYWHEEL_KP = 0.003;
+    public static final double FLYWHEEL_KP = 0.0006;
 
     //Sweeper Parameters
     public static final String SWEEPER_SERVO = "sweeper_servo";
