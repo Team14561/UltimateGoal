@@ -33,7 +33,7 @@ public class PusherMotor {
         motor.setDirection(RobotMap.PUSHER_DIRECTION);
 
         //Set the encoder starting position
-        encoderStart = getEncoder();
+        encoderStart = 0.0;
 
     }
 

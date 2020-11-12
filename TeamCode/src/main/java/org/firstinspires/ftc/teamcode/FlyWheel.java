@@ -36,6 +36,9 @@ public class FlyWheel {
         // Set the motor directions
         motor.setDirection(RobotMap.FLYWHEEL_DIRECTION);
 
+        // Set the mode of the motor to encoder driven for speed control
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         //Set FlyWheel initial state
         state = FlywheelState.STOP;
 
@@ -48,8 +51,6 @@ public class FlyWheel {
      *
      * @param gamepad The gamepad from which to read joystick values
      */
-
-
     public void manual(Gamepad gamepad) {
 
         if (gamepad.left_bumper) {
@@ -66,8 +67,6 @@ public class FlyWheel {
 
         if (state == FlywheelState.SHOOT) {
             power = RobotMap.FLYWHEEL_SPEED_OUT;
-            double error = RobotMap.SPEED_GOAL - getSpeed();
-            power -= RobotMap.FLYWHEEL_KP * error;
         }
         else if (state == FlywheelState.INTAKE) {
             power = RobotMap.FLYWHEEL_SPEED_IN;
@@ -80,9 +79,6 @@ public class FlyWheel {
             telemetry.addData("Flywheel Encoder", getEncoder());
             telemetry.addData("Flywheel Speed", getSpeed());
         }
-
-        lastEncoder = getEncoder();
-        previousTime = time.time();
     }
 
     private void setPower(double power  ){
@@ -105,8 +101,15 @@ public class FlyWheel {
     }
 
     public double getSpeed(){
-        double deltaEncoder = getEncoder() - lastEncoder;
-        double deltaTime = time.time() - previousTime;
+        double encoderValue = getEncoder();
+        double currentTime = time.time();
+
+        double deltaEncoder = encoderValue - lastEncoder;
+        double deltaTime = currentTime - previousTime;
+
+        lastEncoder = encoderValue;
+        previousTime = currentTime;
+
         return (deltaEncoder / deltaTime);
     }
 }
