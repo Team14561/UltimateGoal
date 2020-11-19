@@ -67,5 +67,7 @@ public class RobotMap {
     public static final int REVERSE_PUSHER_ENCODER_VALUE = -1;
     public static final double PUSHER_KP = 0.01;
 
+    //Touch Sensor Parameters
+    public static final String HEIGHT_SENSOR = "height_sensor";
 
 }

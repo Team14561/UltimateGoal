@@ -48,6 +48,7 @@ public class TankDrive extends OpMode
     private FlyWheel flywheel;
     private Sweeper sweeper;
     private PusherMotor pusher;
+    private HeightSensor heightSensor;
 
 
     /*
@@ -61,6 +62,7 @@ public class TankDrive extends OpMode
         flywheel = new FlyWheel(hardwareMap,telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
         pusher = new PusherMotor(hardwareMap, telemetry);
+        heightSensor = new HeightSensor(hardwareMap, telemetry);
     }
 
     /*
@@ -89,6 +91,7 @@ public class TankDrive extends OpMode
         flywheel.manual(gamepad2);
         sweeper.buttonServo(gamepad2);
         pusher.manual(gamepad2);
+        heightSensor.broadcastHeight();
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {
