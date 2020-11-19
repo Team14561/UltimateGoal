@@ -37,12 +37,12 @@ public class RobotMap {
     public static final double AUTO_ARM_SPEED = 0.17;
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
-    public static final double kP = 0.05;
+    public static final double kP = 0.06;
     public static final double kD = 0.05;
     public static final double ARM_UP = -300;
     public static final double ARM_DOWN = -1000;
     public static final double GRAVITY_AMPLITUDE = 1.18;
-    public static final double SHOOTING_POSITION = -650.0; //-730.0;
+    public static final double SHOOTING_POSITION = -740.0;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";

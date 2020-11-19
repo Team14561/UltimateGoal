@@ -15,6 +15,7 @@ public class Arm {
     DcMotor leftMotor, rightMotor, encoderMotor;
     Telemetry telemetry;
     double encoderGoal, previousEncoder;
+    int encoderZero;
 
     /**
      * Constructor for the drivetrain
@@ -37,6 +38,7 @@ public class Arm {
         encoderMotor = rightMotor;
         encoderGoal = getEncoder();
         previousEncoder = encoderGoal;
+        encoderZero = 0;
     }
 
     /**
@@ -67,6 +69,10 @@ public class Arm {
             telemetry.addData("Arm Goal", encoderGoal);
         }
 
+    }
+
+    public void initEncoder() {
+        encoderZero = getEncoder();
     }
 
     public void manual(Gamepad gamepad) {
@@ -147,7 +153,7 @@ public class Arm {
     }
 
    public int getEncoder () {
-        return RobotMap.REVERSE_ARM_ENCODER_VALUE*encoderMotor.getCurrentPosition();
+        return RobotMap.REVERSE_ARM_ENCODER_VALUE*encoderMotor.getCurrentPosition() - encoderZero;
    }
 
 
