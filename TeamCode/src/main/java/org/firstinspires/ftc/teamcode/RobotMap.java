@@ -34,7 +34,7 @@ public class RobotMap {
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double ARM_SPEED_UP = 0.35;
     public static final double ARM_SPEED_DOWN = 0.3;
-    public static final double AUTO_ARM_SPEED = 0.17;
+    public static final double AUTO_ARM_SPEED = 0.3;
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
     public static final double kP = 0.06;

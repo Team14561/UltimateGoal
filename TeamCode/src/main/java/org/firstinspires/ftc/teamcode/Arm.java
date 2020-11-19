@@ -176,5 +176,7 @@ public class Arm {
     public boolean atGoal() {
         return Math.abs(getEncoder() - encoderGoal) <= RobotMap.ENCODER_TOLERANCE;
     }
+
+
 }
 
