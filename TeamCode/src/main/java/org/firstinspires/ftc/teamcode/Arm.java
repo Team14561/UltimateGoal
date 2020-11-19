@@ -72,7 +72,7 @@ public class Arm {
     }
 
     public void initEncoder() {
-        encoderZero = getEncoder();
+        encoderZero = encoderMotor.getCurrentPosition();
     }
 
     public void manual(Gamepad gamepad) {
@@ -153,7 +153,7 @@ public class Arm {
     }
 
    public int getEncoder () {
-        return RobotMap.REVERSE_ARM_ENCODER_VALUE*encoderMotor.getCurrentPosition() - encoderZero;
+        return RobotMap.REVERSE_ARM_ENCODER_VALUE * (encoderMotor.getCurrentPosition() - encoderZero);
    }
 
 
