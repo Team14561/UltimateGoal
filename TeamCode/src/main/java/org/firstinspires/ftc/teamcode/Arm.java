@@ -14,7 +14,8 @@ public class Arm {
     // Class variables
     DcMotor leftMotor, rightMotor, encoderMotor;
     Telemetry telemetry;
-    double encoderGoal;
+    double encoderGoal, previousEncoder;
+    int encoderZero;
 
     /**
      * Constructor for the drivetrain
@@ -36,6 +37,8 @@ public class Arm {
         //Set the encoder starting position
         encoderMotor = rightMotor;
         encoderGoal = getEncoder();
+        previousEncoder = encoderGoal;
+        encoderZero = 0;
     }
 
     /**
@@ -68,28 +71,59 @@ public class Arm {
 
     }
 
+    public void initEncoder() {
+        encoderZero = encoderMotor.getCurrentPosition();
+    }
+
     public void manual(Gamepad gamepad) {
 
         double encoderValue = getEncoder();
+        double deltaEncoder = previousEncoder - encoderValue;
+        previousEncoder = encoderValue;
 
         // Get joystick values from gamepad
-        double power  = gamepad.left_stick_y;
+        double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
 
         double speedLimit = RobotMap.ARM_SPEED_UP;
-        if (power > 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
+        if (power < 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
+
+        if(gamepad.y){
+            encoderGoal = RobotMap.SHOOTING_POSITION;
+        }
 
         if (Math.abs(power) < RobotMap.DEADZONE) {
-            double error = encoderValue - encoderGoal;
+            double error = encoderGoal - encoderValue;
             power = RobotMap.kP * error;
-            power = safetyCheck(power);
         }
         else {
             encoderGoal = getEncoder();
+            double gravityCorrection = 0.0;
 
+            if ((power < 0) && (encoderValue < RobotMap.ARM_UP)) {
+
+                //D term for PID loop
+                //gravityCorrection = RobotMap.kD * deltaEncoder;
+
+                //Linear gravity correction
+                //gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * (RobotMap.ARM_UP - encoderValue) /
+                //        (RobotMap.ARM_UP - RobotMap.ARM_DOWN);
+
+                //Sinusoidal gravity correction
+                gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
+                        (RobotMap.ARM_UP - encoderValue) /
+                        (RobotMap.ARM_UP - RobotMap.ARM_DOWN) );
+            }
+            else if (power > 0 && (encoderValue > RobotMap.ARM_UP)) {
+                gravityCorrection = -RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
+                        (RobotMap.ARM_UP - encoderValue) / RobotMap.ARM_UP);
+            }
+
+            telemetry.addData("correction", gravityCorrection);
+            power += gravityCorrection;
         }
 
-
         // Limit speed of arm
+        power = safetyCheck(power);
         power *= speedLimit;
 
         setPower(power);
@@ -119,7 +153,7 @@ public class Arm {
     }
 
    public int getEncoder () {
-        return RobotMap.REVERSE_ARM_ENCODER_VALUE*encoderMotor.getCurrentPosition();
+        return RobotMap.REVERSE_ARM_ENCODER_VALUE * (encoderMotor.getCurrentPosition() - encoderZero);
    }
 
 

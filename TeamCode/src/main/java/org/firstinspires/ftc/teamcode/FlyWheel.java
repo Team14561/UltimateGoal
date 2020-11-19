@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -16,6 +17,9 @@ public class FlyWheel {
     DcMotor motor;
     Telemetry telemetry;
     FlywheelState state;
+    double lastEncoder = 0.0;
+    double previousTime = 0.0;
+    ElapsedTime time;
 
     /**
      * Constructor for the drivetrain
@@ -32,9 +36,14 @@ public class FlyWheel {
         // Set the motor directions
         motor.setDirection(RobotMap.FLYWHEEL_DIRECTION);
 
+        // Set the mode of the motor to encoder driven for speed control
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         //Set FlyWheel initial state
         state = FlywheelState.STOP;
 
+        time = new ElapsedTime();
+        time.reset();
     }
 
     /**
@@ -42,8 +51,6 @@ public class FlyWheel {
      *
      * @param gamepad The gamepad from which to read joystick values
      */
-
-
     public void manual(Gamepad gamepad) {
 
         if (gamepad.left_bumper) {
@@ -67,12 +74,11 @@ public class FlyWheel {
 
         setPower(power);
 
-
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
             telemetry.addData("Flywheel Encoder", getEncoder());
+            telemetry.addData("Flywheel Speed", getSpeed());
         }
-
     }
 
     private void setPower(double power  ){
@@ -94,6 +100,16 @@ public class FlyWheel {
         return RobotMap.REVERSE_FLYWHEEL_ENCODER_VALUE * (motor.getCurrentPosition());
     }
 
+    public double getSpeed(){
+        double encoderValue = getEncoder();
+        double currentTime = time.time();
 
+        double deltaEncoder = encoderValue - lastEncoder;
+        double deltaTime = currentTime - previousTime;
 
+        lastEncoder = encoderValue;
+        previousTime = currentTime;
+
+        return (deltaEncoder / deltaTime);
+    }
 }
