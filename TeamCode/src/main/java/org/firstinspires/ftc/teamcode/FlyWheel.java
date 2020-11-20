@@ -76,7 +76,6 @@ public class FlyWheel {
 
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
-            telemetry.addData("Flywheel Encoder", getEncoder());
             telemetry.addData("Flywheel Speed", getSpeed());
         }
     }

@@ -61,7 +61,6 @@ public class ArcadeDrive extends OpMode
     public void init() {
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
-        arm.initEncoder();
         flywheel = new FlyWheel(hardwareMap,telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
         pusher = new PusherMotor(hardwareMap, telemetry);

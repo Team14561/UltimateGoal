@@ -24,12 +24,14 @@ public class RingSenseAuton {
     public void mainStages(){
         arm.autonMaintain();
 
+        /*
         if (stage == 0){
             if (){
 
             }
             stage = 1;
         }
+        */
 
     }
 }

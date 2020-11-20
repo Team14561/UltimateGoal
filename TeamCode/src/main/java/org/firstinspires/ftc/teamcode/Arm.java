@@ -36,9 +36,9 @@ public class Arm {
 
         //Set the encoder starting position
         encoderMotor = rightMotor;
+        initEncoder();
         encoderGoal = getEncoder();
         previousEncoder = encoderGoal;
-        encoderZero = 0;
     }
 
     /**
@@ -69,10 +69,6 @@ public class Arm {
             telemetry.addData("Arm Goal", encoderGoal);
         }
 
-    }
-
-    public void initEncoder() {
-        encoderZero = encoderMotor.getCurrentPosition();
     }
 
     public void manual(Gamepad gamepad) {
@@ -117,8 +113,6 @@ public class Arm {
                 gravityCorrection = -RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
                         (RobotMap.ARM_UP - encoderValue) / RobotMap.ARM_UP);
             }
-
-            telemetry.addData("correction", gravityCorrection);
             power += gravityCorrection;
         }
 
@@ -152,8 +146,13 @@ public class Arm {
         return out;
     }
 
-   public int getEncoder () {
-        return RobotMap.REVERSE_ARM_ENCODER_VALUE * (encoderMotor.getCurrentPosition() - encoderZero);
+    public void initEncoder() {
+        encoderZero = 0;
+        encoderZero = getEncoder();
+    }
+
+    public int getEncoder () {
+        return RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
    }
 
 
