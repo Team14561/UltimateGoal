@@ -29,8 +29,8 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
@@ -39,29 +39,18 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Team 14561
  */
 
-@TeleOp(name="TankDrive", group="UltimateGoal")
-public class TankDrive extends OpMode
+@Autonomous(name="BlueAuton", group="UltimateGoal")
+public class BlueAuton extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
-    private DriveTrain drivetrain;
-    private Arm arm;
-    private FlyWheel flywheel;
-    private Sweeper sweeper;
-    private PusherMotor pusher;
-    private HeightSensor heightSensor;
-
+    RingSenseAuton ringSenseAuton;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        drivetrain = new DriveTrain(hardwareMap, telemetry);
-        arm = new Arm(hardwareMap, telemetry);
-        flywheel = new FlyWheel(hardwareMap,telemetry);
-        sweeper = new Sweeper(hardwareMap, telemetry);
-        pusher = new PusherMotor(hardwareMap, telemetry);
-        heightSensor = new HeightSensor(hardwareMap, telemetry);
+        ringSenseAuton = new RingSenseAuton(hardwareMap, telemetry, runtime);
     }
 
     /*
@@ -85,34 +74,13 @@ public class TankDrive extends OpMode
      */
     @Override
     public void loop() {
-        drivetrain.mecanumDrive(gamepad1);
-        arm.manual(gamepad2);
-        flywheel.manual(gamepad2);
-        sweeper.buttonServo(gamepad2);
-        pusher.manual(gamepad2);
-        heightSensor.broadcastHeight();
-
+        ringSenseAuton.mainStages();
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
         }
         telemetry.update();
     }
-
-    //Controls Arm to prevent colliding with ground
-    /*
-    public void collisionAvoidance(double goal){
-        double totalArmHeight = RobotMap.ELEVATOR_ENCODER_CONSTANT * elevator.getEncoder() + RobotMap.ELEVATOR_MIN_HEIGHT;
-        if(RobotMap.ARM_LENGTH * Math.cos(RobotMap.ARM_ENCODER_CONSTANT * goal) >= totalArmHeight - RobotMap.ARM_GROUND_CLEARANCE){
-            int armEncoderValue = (int)(Math.acos(totalArmHeight / RobotMap.ARM_LENGTH) / RobotMap.ELEVATOR_ENCODER_CONSTANT);
-            arm.setAutonGoal(armEncoderValue);
-        }
-    }
-     */
-    void move( double distance, int localDegrees){
-        
-    }
-
 
     /*
      * Code to run ONCE after the driver hits STOP
