@@ -110,6 +110,9 @@ public class TankDrive extends OpMode
         }
     }
      */
+    void move( double distance, int localDegrees){
+        
+    }
 
 
     /*
