@@ -19,6 +19,10 @@ public class RingSenseAuton {
     public int ringNumber;
     private double sensorWait;
 
+    // Object variables mimicing gamepad control
+    double armPower = 0.0;
+    boolean armGotoShoot = false;
+
     public RingSenseAuton (HardwareMap hardwareMap,
                             Telemetry telemetry, ElapsedTime runtime){
         this.runtime = runtime;
@@ -27,7 +31,7 @@ public class RingSenseAuton {
     }
 
     public void mainStages() {
-        arm.autonMaintain();
+        arm.manual(armPower, armGotoShoot);
 
         /*
             1. Move the arm down out of starting position
@@ -45,7 +49,7 @@ public class RingSenseAuton {
 
         if (stage == 0) {
             armEncoderStart = arm.getEncoder();
-            arm.manual(0.5, false);
+            armPower = 0.5;
             expirationTime = runtime.time() + 5.0;
             stage = 1;
         }
@@ -63,7 +67,7 @@ public class RingSenseAuton {
         //if jump or time runs out stop arm and move on
         else if (stage == 3) {
             if (Math.abs(oldHeight - newHeight) > 50 || runtime.time() > expirationTime) {
-                arm.manual(0.0, false);
+                armPower = 0.0;
                 armEncoderEnd = arm.getEncoder();
                 stage = 4;
             } else {
