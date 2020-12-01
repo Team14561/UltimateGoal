@@ -281,6 +281,25 @@ public class DriveTrain {
     }
     */
 
+    private void move(double distance, int directionDegrees){
+        double directionRatio = 20;
+        for(int i = 0; i < directionDegrees * directionRatio; i++){
+            if(directionDegrees < 0){
+                mecanumDrive(-1, 1, 0);
+            }
+            else{
+                mecanumDrive(1, -1, 0);
+            }
+        }
+
+        double distRatio = 20;
+        for(int i = 0; i < distance * distRatio; ++i){
+            mecanumDrive(1, 1, 0);
+        }
+
+
+    }
+
 
 }
 
