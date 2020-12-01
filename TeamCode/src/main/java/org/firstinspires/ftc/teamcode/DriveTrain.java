@@ -56,21 +56,21 @@ public class DriveTrain {
         //gyro = hardwareMap.get(BNO055IMU.class, "imu");
     }
 
-    public int getEncoderRight () {
+    public int getEncoderRight() {
         return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (rightEncoder.getCurrentPosition());
     }
 
-    public int getEncoderLeft () {
+    public int getEncoderLeft() {
         return RobotMap.REVERSE_DRIVETRAIN_ENCODER_VALUE * (leftEncoder.getCurrentPosition());
     }
 
-    public void gyroInit(){
+    public void gyroInit() {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
-        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
         parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-        parameters.loggingEnabled      = true;
-        parameters.loggingTag          = "IMU";
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
 
         gyro.initialize(parameters);
@@ -87,7 +87,7 @@ public class DriveTrain {
      */
 
 
-    public void mecanumDrive(Gamepad gamepad){
+    public void mecanumDrive(Gamepad gamepad) {
 
 
         double leftPower = gamepad.left_stick_y;
@@ -108,8 +108,7 @@ public class DriveTrain {
         if (gamepad.left_bumper) {
             highSpeed = false;
 
-        }
-        else if (gamepad.right_bumper){
+        } else if (gamepad.right_bumper) {
             highSpeed = true;
         }
 
@@ -117,8 +116,8 @@ public class DriveTrain {
 
         // Output Encoder Values
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
-             telemetry.addData("Left Encoder", getEncoderLeft());
-             telemetry.addData("Right Encoder", getEncoderRight());
+            telemetry.addData("Left Encoder", getEncoderLeft());
+            telemetry.addData("Right Encoder", getEncoderRight());
             // telemetry.addData("Gyroscope", gyro.getAngularOrientation().firstAngle);
         }
     }

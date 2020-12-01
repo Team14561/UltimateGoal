@@ -16,9 +16,8 @@ public class HeightSensor {
 
     }
 
-    private double getHeight(){
+    public double getHeight(){
         return heightSensor.getDistance(DistanceUnit.INCH);
-
     }
 
     public void broadcastHeight(){

@@ -73,17 +73,21 @@ public class Arm {
 
     public void manual(Gamepad gamepad) {
 
+        // Get joystick values from gamepad
+        double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
+
+        manual(power, gamepad.y);
+    }
+
+    public void manual(double power, boolean yPressed) {
         double encoderValue = getEncoder();
         double deltaEncoder = previousEncoder - encoderValue;
         previousEncoder = encoderValue;
 
-        // Get joystick values from gamepad
-        double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
-
         double speedLimit = RobotMap.ARM_SPEED_UP;
         if (power < 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
 
-        if(gamepad.y){
+        if(yPressed){
             encoderGoal = RobotMap.SHOOTING_POSITION;
         }
 
