@@ -168,7 +168,9 @@ public class Arm {
         return RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
    }
 
-
+    public void setEncoderGoal(double goal) {
+        encoderGoal = goal;
+    }
 
 
    //Autonomus Here Down

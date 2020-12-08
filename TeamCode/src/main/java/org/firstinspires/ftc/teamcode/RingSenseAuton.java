@@ -16,14 +16,12 @@ public class RingSenseAuton {
     private PusherMotor pusherMotor;
     private Sweeper sweeper;
     private DriveTrain driveTrain;
-    private double armEncoderStart;
-    private double armEncoderEnd = 1317.0;
     private double height;
     public int ringNumber;
-    private double sensorWait;
-    private double driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
+    private double driveTrainEncoder;
     private double driveTrainGoal;
-    private int encoderGoal;
+    Telemetry telemetry;
+
 
     // Object variables mimicing gamepad control
     double armPower = 0.0;
@@ -32,12 +30,16 @@ public class RingSenseAuton {
     public RingSenseAuton (HardwareMap hardwareMap,
                             Telemetry telemetry, ElapsedTime runtime){
         this.runtime = runtime;
+        this.telemetry = telemetry;
         heightSensor = new HeightSensor(hardwareMap,telemetry);
         arm = new Arm(hardwareMap, telemetry);
         driveTrain = new DriveTrain(hardwareMap, telemetry);
         flyWheel = new FlyWheel(hardwareMap, telemetry);
         pusherMotor = new PusherMotor(hardwareMap, telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
+
+        //Get initial encoder value
+        driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
     }
 
     public void mainStages() {
@@ -58,9 +60,8 @@ public class RingSenseAuton {
 
 
         if (stage == 0) {
-            armEncoderStart = arm.getEncoder();
-            armPower = 0.5;
-            expirationTime = runtime.time() + 5.0;
+            armPower = -0.8;
+            expirationTime = runtime.time() + 7.0;
             stage = 1;
         }
         else if (stage == 1) {
@@ -70,8 +71,8 @@ public class RingSenseAuton {
            }
         }
         else if (stage == 2) {
-            encoderGoal = RobotMap.FOUR_RING_HEIGHT;
-            expirationTime = runtime.time() + 2.0;
+            arm.setEncoderGoal(RobotMap.FOUR_RING_HEIGHT);
+            expirationTime = runtime.time() + 3.0;
             stage = 3;
         }
         else if (stage == 3) {
@@ -90,8 +91,8 @@ public class RingSenseAuton {
             }
         }
         else if (stage == 5) {
-            encoderGoal = RobotMap.ONE_RING_HEIGHT;
-            expirationTime = runtime.time() + 2.0;
+            arm.setEncoderGoal(RobotMap.ONE_RING_HEIGHT);
+            expirationTime = runtime.time() + 3.0;
             stage = 6;
         }
         else if (stage == 6) {
@@ -101,7 +102,7 @@ public class RingSenseAuton {
         }
         else if (stage == 7) {
             height = heightSensor.getHeight();
-            if (height < 100) {
+            if (height < 9) {
                 ringNumber = 1;
                 stage = 8;
             }
@@ -111,8 +112,8 @@ public class RingSenseAuton {
             }
         }
         else if (stage == 8) {
-
-            stage = 9;
+            telemetry.addData("Ring Number", ringNumber);
+            stage = 8;
         }
         /*
         //intake rings
