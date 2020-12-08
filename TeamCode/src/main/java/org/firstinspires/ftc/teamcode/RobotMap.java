@@ -30,6 +30,7 @@ public class RobotMap {
     //Arm Parameters
     public static final String LEFT_ARM_MOTOR = "arm_lifter";
     public static final String RIGHT_ARM_MOTOR = "arm_lifter_encoder";
+    public static final String POT_NAME = "pot";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double ARM_SPEED_UP = 0.35;

@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.AnalogInputController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.SerialNumber;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.RobotMap;
@@ -18,7 +21,6 @@ public class Arm {
     Telemetry telemetry;
     double encoderGoal, previousEncoder;
     int encoderZero;
-
 
     /**
      * Constructor for the drivetrain
@@ -36,6 +38,9 @@ public class Arm {
         // Set the motor directions
         leftMotor.setDirection(RobotMap.LEFT_ARM_DIRECTION);
         rightMotor.setDirection(RobotMap.RIGHT_ARM_DIRECTION);
+
+        //Create the pot
+        pot = hardwareMap.get(AnalogInput.class, RobotMap.POT_NAME);
 
         //Set the encoder starting position
         encoderMotor = rightMotor;
