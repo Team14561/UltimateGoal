@@ -14,9 +14,11 @@ public class Arm {
 
     // Class variables
     DcMotor leftMotor, rightMotor, encoderMotor;
+    AnalogInput pot;
     Telemetry telemetry;
     double encoderGoal, previousEncoder;
     int encoderZero;
+
 
     /**
      * Constructor for the drivetrain
@@ -157,6 +159,7 @@ public class Arm {
     }
 
     public int getEncoder () {
+        telemetry.addData("Potentiometer", pot.getVoltage());
         return RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
    }
 
