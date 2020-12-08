@@ -23,6 +23,7 @@ public class RingSenseAuton {
     private double sensorWait;
     private double driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
     private double driveTrainGoal;
+    private int encoderGoal;
 
     // Object variables mimicing gamepad control
     double armPower = 0.0;
@@ -62,51 +63,45 @@ public class RingSenseAuton {
             expirationTime = runtime.time() + 5.0;
             stage = 1;
         }
-        if else (stage == 1) {
-           if (runtime.time > expirationTime) {
+        else if (stage == 1) {
+           if ( (runtime.time() > expirationTime) || (arm.getEncoder() < -800) ) {
                armPower = 0.0;
                stage = 2;
            }
         }
-        if else (stage == 2) {
-            encoderGoal = encoderValue + 100;
-            //???
+        else if (stage == 2) {
+            encoderGoal = RobotMap.FOUR_RING_HEIGHT;
             expirationTime = runtime.time() + 2.0;
             stage = 3;
         }
-        //???
-        if else (stage == 3) {
-            if (runtime.time > expirationTime) {
-                armPower = 0.0;
+        else if (stage == 3) {
+            if (runtime.time() > expirationTime) {
                 stage = 4;
             }
         }
-        if else (stage == 4) {
-            height = HeightSensor.getHeight();
-            if (Height < 100) {
-                ringNumber = 3;
-                stage = 8
+        else if (stage == 4) {
+            height = heightSensor.getHeight();
+            if (height < 100) {
+                ringNumber = 4;
+                stage = 8;
             }
             else {
                 stage = 5;
             }
         }
-        if else (stage == 5) {
-            encoderGoal = encoderValue + 10;
-            //???
-            expirationTime = runtime.time() + 1.0;
+        else if (stage == 5) {
+            encoderGoal = RobotMap.ONE_RING_HEIGHT;
+            expirationTime = runtime.time() + 2.0;
             stage = 6;
         }
-        //???
-        if else (stage == 6) {
-            if (runtime.time > expirationTime) {
-                armPower = 0.0;
+        else if (stage == 6) {
+            if (runtime.time() > expirationTime) {
                 stage = 7;
             }
         }
-        if else (stage == 7) {
-            height = HeightSensor.getHeight();
-            if (Height < 100) {
+        else if (stage == 7) {
+            height = heightSensor.getHeight();
+            if (height < 100) {
                 ringNumber = 1;
                 stage = 8;
             }
@@ -115,10 +110,11 @@ public class RingSenseAuton {
                 stage = 8;
             }
         }
-        if else (stage == 8) {
+        else if (stage == 8) {
 
-            stage = 5;
+            stage = 9;
         }
+        /*
         //intake rings
         else if(stage == 5){
             double time1 = 0;
@@ -136,12 +132,11 @@ public class RingSenseAuton {
         //move to wobble goal
         else if(stage == 6){
             driveTrainGoal = 100;
-            if(driveTrainEncoder </*will have to change sign*/ driveTrainGoal) {
+            if(driveTrainEncoder < driveTrainGoal) {
                 driveTrain.arcadeDrive(0, 0, 1, false, false);
             } else {
                 stage = 7;
             }
-
         }
         //pick up wobble goal
         else if(stage == 7){
@@ -153,7 +148,7 @@ public class RingSenseAuton {
         else if(stage == 8){
             driveTrainGoal = 1000;
 
-            if(driveTrainEncoder </*will have to change sign*/ driveTrainGoal) {
+            if(driveTrainEncoder < driveTrainGoal) {
                 driveTrain.arcadeDrive(0, 1, 0, false, false);
             } else {
                 stage = 9;
@@ -249,6 +244,7 @@ public class RingSenseAuton {
             }
 
         }
+        */
     }
 }
 

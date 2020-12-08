@@ -43,6 +43,8 @@ public class RobotMap {
     public static final double ARM_DOWN = -1000;
     public static final double GRAVITY_AMPLITUDE = 1.18;
     public static final double SHOOTING_POSITION = -670.0;
+    public static final int FOUR_RING_HEIGHT = -850;
+    public static final int ONE_RING_HEIGHT = -950;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
