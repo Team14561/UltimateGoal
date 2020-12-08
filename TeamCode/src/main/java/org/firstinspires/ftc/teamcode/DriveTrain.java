@@ -166,11 +166,15 @@ public class DriveTrain {
 
     }
 
-    public void arcadeDrive(Gamepad gamepad){
-        double rotation = gamepad.right_stick_x;
-        double leftPower = gamepad.left_stick_y - rotation;
-        double rightPower = gamepad.left_stick_y + rotation;
-        double strafeValue = -gamepad.left_stick_x;
+    public void arcadeDrive(Gamepad gamepad) {
+        arcadeDrive(gamepad.right_stick_x, gamepad.left_stick_y, gamepad.left_stick_x, gamepad.left_bumper, gamepad.right_bumper);
+    }
+
+    public void arcadeDrive(double rStickX, double lStickY, double lStickX, Boolean leftB, Boolean rightB){
+        double rotation = rStickX;
+        double leftPower = lStickY - rotation;
+        double rightPower = lStickY + rotation;
+        double strafeValue = -lStickX;
 
 
         // Reverse joystick values if requested
@@ -179,11 +183,11 @@ public class DriveTrain {
             rightPower *= -1.0;
         }
 
-        if (gamepad.left_bumper) {
+        if (leftB) {
             highSpeed = false;
 
         }
-        else if (gamepad.right_bumper){
+        else if (rightB){
             highSpeed = true;
         }
 
@@ -279,7 +283,7 @@ public class DriveTrain {
        return (rightMotor.getCurrentPosition() - rightZero) / RobotMap.MOTOR_SCALE;
     }
     */
-
+    /*
     private void move(double distance, int directionDegrees){
         double directionRatio = 20;
         for(int i = 0; i < directionDegrees * directionRatio; i++){
@@ -298,7 +302,7 @@ public class DriveTrain {
 
 
     }
-
+*/
 
 }
 

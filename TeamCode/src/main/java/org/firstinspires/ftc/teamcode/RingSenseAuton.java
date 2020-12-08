@@ -12,12 +12,18 @@ public class RingSenseAuton {
     private ElapsedTime runtime;
     private HeightSensor heightSensor;
     private Arm arm;
+    private FlyWheel flyWheel;
+    private PusherMotor pusherMotor;
+    private Sweeper sweeper;
+    private DriveTrain driveTrain;
     private double armEncoderStart;
     private double armEncoderEnd = 1317.0;
     private double oldHeight;
     private double newHeight;
     public int ringNumber;
     private double sensorWait;
+    private double driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
+    private double driveTrainGoal;
 
     // Object variables mimicing gamepad control
     double armPower = 0.0;
@@ -28,6 +34,10 @@ public class RingSenseAuton {
         this.runtime = runtime;
         heightSensor = new HeightSensor(hardwareMap,telemetry);
         arm = new Arm(hardwareMap, telemetry);
+        driveTrain = new DriveTrain(hardwareMap, telemetry);
+        flyWheel = new FlyWheel(hardwareMap, telemetry);
+        pusherMotor = new PusherMotor(hardwareMap, telemetry);
+        sweeper = new Sweeper(hardwareMap, telemetry);
     }
 
     public void mainStages() {
@@ -88,6 +98,136 @@ public class RingSenseAuton {
                 ringNumber = 0;
             }
             stage = 5;
+        }
+        //intake rings
+        else if(stage == 5){
+            double time1 = 0;
+            if (armEncoderStart - armEncoderEnd > -300) {
+                arm.manual(-5, false);
+                expirationTime = runtime.time() + 5.0;
+                time1 = expirationTime - 5.0;
+            }
+            else if(time1 < expirationTime){
+                flyWheel.manual(true, false, false);
+            } else{
+                stage = 6;
+            }
+        }
+        //move to wobble goal
+        else if(stage == 6){
+            driveTrainGoal = 100;
+            if(driveTrainEncoder </*will have to change sign*/ driveTrainGoal) {
+                driveTrain.arcadeDrive(0, 0, 1, false, false);
+            } else {
+                stage = 7;
+            }
+
+        }
+        //pick up wobble goal
+        else if(stage == 7){
+            armPower = -0.2;
+            expirationTime = runtime.time() + 5.0;
+            stage = 8;
+        }
+        //move to target zone
+        else if(stage == 8){
+            driveTrainGoal = 1000;
+
+            if(driveTrainEncoder </*will have to change sign*/ driveTrainGoal) {
+                driveTrain.arcadeDrive(0, 1, 0, false, false);
+            } else {
+                stage = 9;
+            }
+        }
+        //move to target zone specified
+        else if(stage == 9){
+            switch(ringNumber){
+                case 1:
+                    driveTrainGoal = 100;
+                    if(driveTrainEncoder < driveTrainGoal){
+                        driveTrain.arcadeDrive(0, 0, 1, false, false);
+                    } else {
+                        stage = 10;
+                        break;
+                    }
+                case 2:
+                    driveTrainGoal = 100;
+                    if(driveTrainEncoder < driveTrainGoal){
+                        driveTrain.arcadeDrive(0, 2, -1, false, false);
+                    } else {
+                        stage = 10;
+                        break;
+                    }
+                case 3:
+                    driveTrainGoal = 100;
+                    if(driveTrainEncoder < driveTrainGoal){
+                        driveTrain.arcadeDrive(0, 3, 1, false, false);
+                    } else {
+                        stage = 10;
+                        break;
+                    }
+            }
+        }
+        //drop wobble goal
+        else if(stage == 10){
+            armPower = -.03;
+            expirationTime = runtime.time() + 5.0;
+
+            driveTrainGoal = 100;
+            if(driveTrainEncoder < driveTrainGoal){
+                driveTrain.arcadeDrive(0, -1, 0, false, false);
+            }
+            stage = 10;
+        }
+        //go to shooting position
+        else if(stage == 11){
+            double stickY = 0;
+            double stickX = 0;
+            switch(ringNumber){
+                case 1:
+                    stickY = -2;
+                    stickX = -1;
+                    driveTrainGoal = 100;
+                    break;
+                case 2:
+                    stickY = -2;
+                    stickX = 0;
+                    driveTrainGoal = 100;
+                    break;
+                case 3:
+                    stickY = -3;
+                    stickX = -1;
+                    driveTrainGoal = 100;
+                    break;
+            }
+
+            if(driveTrainEncoder < driveTrainGoal){
+                driveTrain.arcadeDrive(0, stickY, stickX, false, false);
+            }else{
+                stage = 12;
+            }
+
+        }
+        //shoot rings
+        else if(stage == 12){
+            double pusherGoal = 100;
+            sweeper.buttonServo(false, true);
+            flyWheel.manual(false, true, false);
+            if(pusherGoal > pusherMotor.getEncoder()){
+                pusherMotor.manual(.5, 0, false);
+            }else{
+                stage = 13;
+            }
+
+        }
+        //move to end zone
+        else if(stage == 13)
+        {
+            driveTrainGoal = 100;
+            if(driveTrainEncoder < driveTrainGoal){
+                driveTrain.arcadeDrive(0, 1, 0, false, false);
+            }
+
         }
     }
 }

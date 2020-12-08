@@ -45,11 +45,14 @@ public class PusherMotor {
      * @param gamepad The gamepad from which to read joystick values
      */
     public void manual(Gamepad gamepad) {
+        manual(gamepad.right_trigger, gamepad.left_trigger, gamepad.left_bumper);
+    }
+    public void manual(double right_trigger, double left_trigger, Boolean left_bumper){
         double speedLimit = RobotMap.PUSHER_SPEED;
 
-        double power = gamepad.right_trigger - gamepad.left_trigger;
+        double power = right_trigger - left_trigger;
 
-        if(gamepad.left_bumper) {
+        if(left_bumper) {
             buttonPressed = true;
             encoderGoal = encoderStart;
         }

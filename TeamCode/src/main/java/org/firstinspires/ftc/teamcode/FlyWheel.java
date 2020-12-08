@@ -52,14 +52,18 @@ public class FlyWheel {
      * @param gamepad The gamepad from which to read joystick values
      */
     public void manual(Gamepad gamepad) {
+        manual(gamepad.left_bumper, gamepad.right_bumper, gamepad.b);
+    }
 
-        if (gamepad.left_bumper) {
+    public void manual(Boolean left_bumper, Boolean right_bumper, Boolean b){
+
+        if (left_bumper) {
             state = FlywheelState.INTAKE;
         }
-        else if (gamepad.right_bumper) {
+        else if (right_bumper) {
             state = FlywheelState.SHOOT;
         }
-        else if (gamepad.b) {
+        else if (b) {
             state = FlywheelState.STOP;
         }
 
