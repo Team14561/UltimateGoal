@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class RingSenseAuton {
 
+    private AnalogInput potentiometer;
     private int stage = 0;
     private double expirationTime;
     private ElapsedTime runtime;
@@ -115,11 +117,12 @@ public class RingSenseAuton {
             telemetry.addData("Ring Number", ringNumber);
             stage = 8;
         }
-        /*
+
         //intake rings
         else if(stage == 5){
             double time1 = 0;
-            if (armEncoderStart - armEncoderEnd > -300) {
+            expirationTime = runtime.time() + 5;
+            if ( (runtime.time() > expirationTime) || (arm.getEncoder() < -300)) {
                 arm.manual(-5, false);
                 expirationTime = runtime.time() + 5.0;
                 time1 = expirationTime - 5.0;
@@ -245,7 +248,7 @@ public class RingSenseAuton {
             }
 
         }
-        */
+
     }
 }
 
