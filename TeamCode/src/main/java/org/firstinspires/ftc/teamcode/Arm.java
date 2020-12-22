@@ -164,7 +164,7 @@ public class Arm {
     }
 
     public int getEncoder () {
-        int adjustedPot = Math.round(578.5124 * pot.getVoltage());
+        int adjustedPot = (int) Math.round(-578.5124 * pot.getVoltage() + 295.86);
         telemetry.addData("Adjusted Potentiometer", adjustedPot);
         int encoderValue = RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
         telemetry.addData("Encoder Value", encoderValue);
