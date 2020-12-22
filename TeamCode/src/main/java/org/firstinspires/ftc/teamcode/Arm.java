@@ -104,7 +104,7 @@ public class Arm {
             power = RobotMap.kP * error;
         }
         else {
-            encoderGoal = getEncoder();
+            encoderGoal = encoderValue;
             double gravityCorrection = 0.0;
 
             if ((power < 0) && (encoderValue < RobotMap.ARM_UP)) {
@@ -164,10 +164,12 @@ public class Arm {
     }
 
     public int getEncoder () {
-        int adjustedPot = (int) Math.round(-578.5124 * pot.getVoltage() + 295.86);
-        telemetry.addData("Adjusted Potentiometer", adjustedPot);
+        //telemetry.addData("Pot", pot.getVoltage());
+        //int adjustedPot = (int) Math.round(-658.76 * pot.getVoltage() + 528.33);
+        //int adjustedPot = (int) Math.round(-578.51 * pot.getVoltage() + 295.86);
+        //telemetry.addData("Adjusted Potentiometer", adjustedPot);
+
         int encoderValue = RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
-        telemetry.addData("Encoder Value", encoderValue);
         return encoderValue;
    }
 
