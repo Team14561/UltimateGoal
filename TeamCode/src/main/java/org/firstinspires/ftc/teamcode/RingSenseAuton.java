@@ -45,6 +45,8 @@ public class RingSenseAuton {
     }
 
     public void mainStages() {
+        driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
+
         arm.manual(armPower, armGotoShoot, false);
 
         /*
