@@ -33,22 +33,22 @@ public class RobotMap {
     public static final String POT_NAME = "pot";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double ARM_SPEED_UP = 0.45;
+    public static final double ARM_SPEED_UP = 0.4;
     public static final double ARM_SPEED_DOWN = 0.3;
     public static final double AUTO_ARM_SPEED = 0.3;
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
     public static final double kP = 0.06;
-    public static final double kD = 0.05;
+    public static final double kP_POT = 20.0;
     public static final double ARM_UP = -300;
     public static final double ARM_DOWN = -1000;
     public static final double GRAVITY_AMPLITUDE = 1.18;
-    public static final double SHOOTING_POSITION = -670.0;
+    public static final double SHOOTING_POSITION = -700.0;
     public static final int FOUR_RING_HEIGHT = -900;
     public static final int ONE_RING_HEIGHT = -950;
     public static final double POT_ARM_UP = 1.03;
     public static final double POT_ARM_DOWN = 2.24;
-    public static final double POT_SHOOTING_POSITION = 1.687;
+    public static final double POT_SHOOTING_POSITION = 1.745;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";

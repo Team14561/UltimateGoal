@@ -23,6 +23,7 @@ public class Arm {
     Telemetry telemetry;
     double encoderGoal, previousEncoder;
     int encoderZero;
+    boolean shooting = false;
 
     /**
      * Constructor for the drivetrain
@@ -47,6 +48,7 @@ public class Arm {
         //Set the encoder starting position
         encoderMotor = rightMotor;
         initEncoder();
+        encoderGoal = getEncoder();
         previousEncoder = encoderGoal;
     }
 
@@ -88,16 +90,17 @@ public class Arm {
         manual(power, gamepad.y, gamepad.back);
     }
 
+
     public void manual(double power, boolean yPressed, boolean back) {
         double encoderValue = getEncoder();
-        double deltaEncoder = previousEncoder - encoderValue;
+        double potValue = getPot();
         previousEncoder = encoderValue;
 
         double speedLimit = RobotMap.ARM_SPEED_UP;
         if (power < 0) speedLimit = RobotMap.ARM_SPEED_DOWN;
 
-        if(yPressed){
-            encoderGoal = RobotMap.SHOOTING_POSITION;
+        if (yPressed) {
+            shooting = true;
         }
 
         if(back){
@@ -105,21 +108,22 @@ public class Arm {
         }
 
         if (Math.abs(power) < RobotMap.DEADZONE) {
-            double error = encoderGoal - encoderValue;
-            power = RobotMap.kP * error;
+            if (shooting){
+                double error = potValue - RobotMap.POT_SHOOTING_POSITION;
+                power = RobotMap.kP_POT * error;
+                if (encoderValue < RobotMap.ARM_UP) power = Math.max(power, -0.1);
+            }
+            else {
+                double error = encoderGoal - encoderValue;
+                power = RobotMap.kP * error;
+            }
         }
         else {
+            shooting = false;
             encoderGoal = encoderValue;
             double gravityCorrection = 0.0;
 
             if ((power < 0) && (encoderValue < RobotMap.ARM_UP)) {
-
-                //D term for PID loop
-                //gravityCorrection = RobotMap.kD * deltaEncoder;
-
-                //Linear gravity correction
-                //gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * (RobotMap.ARM_UP - encoderValue) /
-                //        (RobotMap.ARM_UP - RobotMap.ARM_DOWN);
 
                 //Sinusoidal gravity correction
                 gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
@@ -141,6 +145,7 @@ public class Arm {
 
         //output the encoder value//
         if (RobotMap.DISPLAY_ENCODER_VALUES) {
+            telemetry.addData("Pot Value", potValue);
             telemetry.addData("Arm Encoder", encoderValue);
             telemetry.addData("Arm Goal", encoderGoal);
         }
@@ -167,16 +172,20 @@ public class Arm {
         encoderZero = 0;
         int currentEncoder = getEncoder();
         encoderZero = currentEncoder;
-        encoderGoal = 0;
+    }
+
+    public double getPot() {
+        return pot.getVoltage();
     }
 
     public int getEncoder () {
-        telemetry.addData("Pot", pot.getVoltage());
+        //telemetry.addData("Pot", pot.getVoltage());
         //int adjustedPot = (int) Math.round(-658.76 * pot.getVoltage() + 528.33);
         //int adjustedPot = (int) Math.round(-578.51 * pot.getVoltage() + 295.86); //The original better one
         //telemetry.addData("Adjusted Potentiometer", adjustedPot);
 
         int encoderValue = RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;
+
         return encoderValue;
    }
 
