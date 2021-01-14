@@ -27,7 +27,7 @@ public class RobotMap {
     public static final Boolean DISPLAY_ENCODER_VALUES = true;
     public static final int ENCODER_TOLERANCE = 20;
 
-    //Arm Parameters
+    //Arm Parameter
     public static final String LEFT_ARM_MOTOR = "arm_lifter";
     public static final String RIGHT_ARM_MOTOR = "arm_lifter_encoder";
     public static final String POT_NAME = "pot";
