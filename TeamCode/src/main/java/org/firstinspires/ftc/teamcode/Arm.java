@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import com.qualcomm.robotcore.hardware.AnalogInputController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.SerialNumber;
 
@@ -45,7 +47,6 @@ public class Arm {
         //Set the encoder starting position
         encoderMotor = rightMotor;
         initEncoder();
-        encoderGoal = getEncoder();
         previousEncoder = encoderGoal;
     }
 
@@ -84,10 +85,10 @@ public class Arm {
         // Get joystick values from gamepad
         double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
 
-        manual(power, gamepad.y);
+        manual(power, gamepad.y, gamepad.back);
     }
 
-    public void manual(double power, boolean yPressed) {
+    public void manual(double power, boolean yPressed, boolean back) {
         double encoderValue = getEncoder();
         double deltaEncoder = previousEncoder - encoderValue;
         previousEncoder = encoderValue;
@@ -97,6 +98,10 @@ public class Arm {
 
         if(yPressed){
             encoderGoal = RobotMap.SHOOTING_POSITION;
+        }
+
+        if(back){
+            initEncoder();
         }
 
         if (Math.abs(power) < RobotMap.DEADZONE) {
@@ -160,13 +165,15 @@ public class Arm {
 
     public void initEncoder() {
         encoderZero = 0;
-        encoderZero = getEncoder();
+        int currentEncoder = getEncoder();
+        encoderZero = currentEncoder;
+        encoderGoal = 0;
     }
 
     public int getEncoder () {
-        //telemetry.addData("Pot", pot.getVoltage());
+        telemetry.addData("Pot", pot.getVoltage());
         //int adjustedPot = (int) Math.round(-658.76 * pot.getVoltage() + 528.33);
-        //int adjustedPot = (int) Math.round(-578.51 * pot.getVoltage() + 295.86);
+        //int adjustedPot = (int) Math.round(-578.51 * pot.getVoltage() + 295.86); //The original better one
         //telemetry.addData("Adjusted Potentiometer", adjustedPot);
 
         int encoderValue = RobotMap.REVERSE_ARM_ENCODER_VALUE * encoderMotor.getCurrentPosition() - encoderZero;

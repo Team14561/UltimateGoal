@@ -45,7 +45,7 @@ public class RingSenseAuton {
     }
 
     public void mainStages() {
-        arm.manual(armPower, armGotoShoot);
+        arm.manual(armPower, armGotoShoot, false);
 
         /*
             1. Move the arm down out of starting position
@@ -123,7 +123,7 @@ public class RingSenseAuton {
             double time1 = 0;
             expirationTime = runtime.time() + 5;
             if ( (runtime.time() > expirationTime) || (arm.getEncoder() < -300)) {
-                arm.manual(-5, false);
+                arm.manual(-5, false, false);
                 expirationTime = runtime.time() + 5.0;
                 time1 = expirationTime - 5.0;
             }
