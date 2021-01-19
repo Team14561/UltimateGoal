@@ -20,7 +20,7 @@ public class RobotMap {
     //TankDrive Parameters
     public static final Boolean DISPLAY_MOTOR_VALUES = true;
     public static final Boolean REVERSE_JOYSTICKS = false;
-    public static final double HIGHSPEED = 0.9;
+    public static final double HIGHSPEED = 1.0;
     public static final double LOWSPEED = 0.3;
 
     //Encoder Parameters
@@ -48,7 +48,7 @@ public class RobotMap {
     public static final int ONE_RING_HEIGHT = -950;
     public static final double POT_ARM_UP = 1.03;
     public static final double POT_ARM_DOWN = 2.24;
-    public static final double POT_SHOOTING_POSITION = 1.745;
+    public static final double POT_SHOOTING_POSITION = 1.73;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
@@ -61,7 +61,7 @@ public class RobotMap {
     public static final String SWEEPER_SERVO = "sweeper_servo";
     public static final double SERVO_OPEN = 0.0;
     public static final double SERVO_CLOSED = 0.7;
-    public static final double SERVO_MID = 0.4;
+    public static final double SERVO_MID = 0.25;
     public static final double MINIMUM_SERVO_POSITION = 0.0;
     public static final double MAXIMUM_SERVO_POSITION = 1.0;
     public static final double SERVO_ANGLE_DEFAULT = SERVO_CLOSED;
