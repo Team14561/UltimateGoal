@@ -83,15 +83,17 @@ public class Arm {
     }
 
     public void manual(Gamepad gamepad) {
-
         // Get joystick values from gamepad
         double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
 
         manual(power, gamepad.y, gamepad.back);
     }
 
+    public void manual (double power, boolean yPressed, boolean back) {
+        manual(power, yPressed, back, RobotMap.POT_SHOOTING_POSITION);
+    }
 
-    public void manual(double power, boolean yPressed, boolean back) {
+    public void manual(double power, boolean yPressed, boolean back, double shootingPos) {
         double encoderValue = getEncoder();
         double potValue = getPot();
         previousEncoder = encoderValue;
@@ -109,7 +111,7 @@ public class Arm {
 
         if (Math.abs(power) < RobotMap.DEADZONE) {
             if (shooting){
-                double error = potValue - RobotMap.POT_SHOOTING_POSITION;
+                double error = potValue - shootingPos;
                 power = RobotMap.kP_POT * error;
                 if (encoderValue < RobotMap.ARM_UP) power = Math.max(power, -0.1);
             }
