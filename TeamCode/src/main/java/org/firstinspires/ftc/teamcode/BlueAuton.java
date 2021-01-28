@@ -34,7 +34,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * Code for Sky Stone FTC 2019
+ * Code for Ultimate Goal FTC 2020
  *
  * Team 14561
  */
@@ -43,14 +43,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class BlueAuton extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
-    RingSenseAuton ringSenseAuton;
+    //RingSenseAuton ringSenseAuton;
+    ShootingAuton shootingAuton;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
     @Override
     public void init() {
-        ringSenseAuton = new RingSenseAuton(hardwareMap, telemetry, runtime);
+        //ringSenseAuton = new RingSenseAuton(hardwareMap, telemetry, runtime);
+        shootingAuton = new ShootingAuton(hardwareMap, telemetry, runtime);
     }
 
     /*
@@ -74,7 +76,9 @@ public class BlueAuton extends OpMode
      */
     @Override
     public void loop() {
-        ringSenseAuton.mainStages();
+        //ringSenseAuton.mainStages();
+        shootingAuton.mainStages();
+
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());

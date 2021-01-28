@@ -72,6 +72,9 @@ public class RobotMap {
     public static final double PUSHER_SPEED = 0.25;
     public static final int REVERSE_PUSHER_ENCODER_VALUE = -1;
     public static final double PUSHER_KP = 0.01;
+    //one ring shot value: 295
+    //two ring shot value: 510
+    //three ring shot (empty) value: 680
 
     //Touch Sensor Parameters
     public static final String HEIGHT_SENSOR = "height_sensor";
