@@ -124,11 +124,26 @@ public class ShootingAuton {
                 stage = 110;
             }
         }
+        else if (stage == 110) {
+            armGotoShoot = false;
+            armPower = 1.0;
+            pusherMotor.manual(0.0, 0.0, true);
+            stage = 120;
+        }
+        else if (stage == 120) {
+            if (arm.getEncoder() > -50) {
+                armPower = 0.0;
+                pusherMotor.manual(0.0,0.0,false);
+                stage = 130;
+            }
+        }
 
 
 
 
-        /*
+
+        /* Power shot
+
         else if(stage == 40){
             pusherGoal = pusherMotor.getEncoder() + 280;
             pusherMotor.manual(1.0, 0.0, false);
