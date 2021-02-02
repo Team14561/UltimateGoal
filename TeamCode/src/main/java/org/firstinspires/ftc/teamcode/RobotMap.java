@@ -60,7 +60,7 @@ public class RobotMap {
     //Sweeper Parameters
     public static final String SWEEPER_SERVO = "sweeper_servo";
     public static final double SERVO_OPEN = 0.0;
-    public static final double SERVO_CLOSED = 0.7;
+    public static final double SERVO_CLOSED = 0.8;
     public static final double SERVO_MID = 0.25;
     public static final double MINIMUM_SERVO_POSITION = 0.0;
     public static final double MAXIMUM_SERVO_POSITION = 1.0;
@@ -78,5 +78,10 @@ public class RobotMap {
 
     //Touch Sensor Parameters
     public static final String HEIGHT_SENSOR = "height_sensor";
+
+    //Wobble Release Parameters
+    public static final String WOBBLE_SERVO = "wobble_release";
+    public static final double WOBBLE_HOLD = 1.0;
+    public static final double WOBBLE_RELEASE = 0.3;
 
 }

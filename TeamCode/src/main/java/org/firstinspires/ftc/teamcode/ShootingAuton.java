@@ -21,6 +21,7 @@ public class ShootingAuton {
     Telemetry telemetry;
     int pusherGoal;
     private double driveTrainGoal;
+    private WobbleRelease wobbleRelease;
 
 
     // Object variables mimicing gamepad control
@@ -36,6 +37,7 @@ public class ShootingAuton {
         flyWheel = new FlyWheel(hardwareMap, telemetry);
         pusherMotor = new PusherMotor(hardwareMap, telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
+        wobbleRelease = new WobbleRelease(hardwareMap, telemetry);
 
     }
 
@@ -114,15 +116,19 @@ public class ShootingAuton {
             stage = 90;
         }
         else if(stage == 90){
-            driveTrainGoal = driveTrainEncoder - 3000;
+            driveTrainGoal = driveTrainEncoder - 4500;
             driveTrain.arcadeDrive(0, -1, 0, false, false);
             stage = 100;
         }
         else if(stage == 100){
             if(driveTrainEncoder < driveTrainGoal){
                 driveTrain.arcadeDrive(0, 0, 0, false, false);
-                stage = 110;
+                stage = 105;
             }
+        }
+        else if(stage == 105){
+            wobbleRelease.wobbleRelease();
+            stage = 110;
         }
         else if (stage == 110) {
             armGotoShoot = false;
