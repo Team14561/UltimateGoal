@@ -1,10 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Arm;
+import org.firstinspires.ftc.teamcode.DriveTrain;
+import org.firstinspires.ftc.teamcode.FlyWheel;
+import org.firstinspires.ftc.teamcode.PusherMotor;
+import org.firstinspires.ftc.teamcode.RobotMap;
+import org.firstinspires.ftc.teamcode.Sweeper;
+import org.firstinspires.ftc.teamcode.WobbleRelease;
 
 public class ShootingAuton {
 
@@ -22,7 +30,7 @@ public class ShootingAuton {
     int pusherGoal;
     private double driveTrainGoal;
     private WobbleRelease wobbleRelease;
-    private ColorSensor colorSensor;
+    private RingSensor colorSensor;
 
 
     // Object variables mimicing gamepad control
@@ -39,7 +47,7 @@ public class ShootingAuton {
         pusherMotor = new PusherMotor(hardwareMap, telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
         wobbleRelease = new WobbleRelease(hardwareMap, telemetry);
-        colorSensor = new ColorSensor(hardwareMap, telemetry);
+        colorSensor = new RingSensor(hardwareMap, telemetry);
 
     }
 
@@ -48,21 +56,6 @@ public class ShootingAuton {
 
         arm.manual(armPower, armGotoShoot, false, RobotMap.POT_SHOOTING_POSITION + 0.01);
         colorSensor.broadcastColor();
-
-
-        /*
-            1. Move the arm down out of starting position
-            2. Stop the arm when the encoder gets to scan distance
-            3. Set the arm goal to position for 3-ring
-            4. Wait for arm to get into position?
-            5. Check distance sensor, if rings detected number equals three, goto stage 10
-            6. Set the arm goal to position for 2-ring
-            7. Wait for arm to get into position
-            8. Check distance sensor, if rings detected number equals two, goto stage 10
-            9. Else number equals 1-ring
-            10. Continue
-        */
-
 
         if (stage == 0) {
             armPower = -0.9;

@@ -52,6 +52,7 @@ public class ArcadeDrive extends OpMode
     private Sweeper sweeper;
     private PusherMotor pusher;
     private HeightSensor heightSensor;
+    private RingSensor ringSensor;
 
 
     /*
@@ -65,6 +66,7 @@ public class ArcadeDrive extends OpMode
         sweeper = new Sweeper(hardwareMap, telemetry);
         pusher = new PusherMotor(hardwareMap, telemetry);
         heightSensor = new HeightSensor(hardwareMap, telemetry);
+        ringSensor = new RingSensor(hardwareMap, telemetry);
     }
 
     /*
@@ -88,12 +90,14 @@ public class ArcadeDrive extends OpMode
      */
     @Override
     public void loop() {
+
         drivetrain.arcadeDrive(gamepad1);
         arm.manual(gamepad2);
         flywheel.manual(gamepad2);
         sweeper.buttonServo(gamepad2);
         pusher.manual(gamepad2);
         heightSensor.broadcastHeight();
+        ringSensor.broadcastColor();
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {
