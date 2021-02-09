@@ -22,6 +22,7 @@ public class ShootingAuton {
     int pusherGoal;
     private double driveTrainGoal;
     private WobbleRelease wobbleRelease;
+    private ColorSensor colorSensor;
 
 
     // Object variables mimicing gamepad control
@@ -38,6 +39,7 @@ public class ShootingAuton {
         pusherMotor = new PusherMotor(hardwareMap, telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
         wobbleRelease = new WobbleRelease(hardwareMap, telemetry);
+        colorSensor = new ColorSensor(hardwareMap, telemetry);
 
     }
 
@@ -45,6 +47,7 @@ public class ShootingAuton {
         driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
 
         arm.manual(armPower, armGotoShoot, false, RobotMap.POT_SHOOTING_POSITION + 0.01);
+        colorSensor.broadcastColor();
 
 
         /*

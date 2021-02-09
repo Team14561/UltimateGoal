@@ -78,6 +78,7 @@ public class RobotMap {
 
     //Touch Sensor Parameters
     public static final String HEIGHT_SENSOR = "height_sensor";
+    public static final String COLOR_SENSOR = "color_sensor";
 
     //Wobble Release Parameters
     public static final String WOBBLE_SERVO = "wobble_release";
