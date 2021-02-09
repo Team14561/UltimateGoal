@@ -17,19 +17,19 @@ public class RingSensor {
 
     }
 
-    public boolean isOrange(){
+    public int isOrange(){
         boolean orange;
         if(colorSensor.red() > 500) {
             orange = true;
         } else {
             orange = false;
         }
-        return(orange);
+        return(colorSensor.red());
 
     }
 
     public void broadcastColor(){
-        telemetry.addData("Orange Detected? ", isOrange());
+        telemetry.addData("Red Value: ", isOrange());
     }
 
 }
