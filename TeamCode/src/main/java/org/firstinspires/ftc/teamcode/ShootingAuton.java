@@ -31,6 +31,10 @@ public class ShootingAuton {
     private double driveTrainGoal;
     private WobbleRelease wobbleRelease;
     private RingSensor colorSensor;
+    boolean countRings = true;
+    int ringCount = 0;
+    double firstRingShown;
+    double encoderDiff;
 
 
     // Object variables mimicing gamepad control
@@ -57,8 +61,29 @@ public class ShootingAuton {
         arm.manual(armPower, armGotoShoot, false, RobotMap.POT_SHOOTING_POSITION + 0.01);
         colorSensor.broadcastColor();
 
+        if(countRings){
+            if(colorSensor.isOrange()){
+
+                if(ringCount == 0) {
+                    firstRingShown = driveTrainEncoder;
+                    ringCount = 1;
+                }
+                else if(ringCount == 1){
+                    encoderDiff = driveTrainEncoder - firstRingShown;
+
+                    if(encoderDiff < -650){
+                        ringCount = 4;
+                        countRings = false;
+                    }
+                }
+            }
+        }
+        telemetry.addData("encoder difference:", encoderDiff);
+        telemetry.addData("Ring Number: ", ringCount);
+        telemetry.addData("arm power: ", armPower);
+
         if (stage == 0) {
-            armPower = -0.9;
+            armPower = -1.0;
             expirationTime = runtime.time() + 7.0;
             stage = 10;
         }
@@ -85,7 +110,7 @@ public class ShootingAuton {
             }
         }
         else if(stage == 40){
-            driveTrainGoal = driveTrainEncoder - 6100;
+            driveTrainGoal = driveTrainEncoder - 3900;
             driveTrain.arcadeDrive(0, -1, 0, false, false);
             stage = 50;
         }
@@ -112,19 +137,18 @@ public class ShootingAuton {
             stage = 90;
         }
         else if(stage == 90){
-            driveTrainGoal = driveTrainEncoder - 4500;
+            driveTrainGoal = driveTrainEncoder - 2800;
             driveTrain.arcadeDrive(0, -1, 0, false, false);
             stage = 100;
         }
         else if(stage == 100){
+            if(driveTrainEncoder < (driveTrainGoal + 1000)){
+                countRings = false;
+            }
             if(driveTrainEncoder < driveTrainGoal){
                 driveTrain.arcadeDrive(0, 0, 0, false, false);
-                stage = 105;
+                stage = 110;
             }
-        }
-        else if(stage == 105){
-            wobbleRelease.wobbleRelease();
-            stage = 110;
         }
         else if (stage == 110) {
             armGotoShoot = false;
@@ -133,12 +157,75 @@ public class ShootingAuton {
             stage = 120;
         }
         else if (stage == 120) {
-            if (arm.getEncoder() > -50) {
+            if (arm.getEncoder() > -60) {
                 armPower = 0.0;
                 pusherMotor.manual(0.0,0.0,false);
-                stage = 130;
+
+                switch (ringCount){
+                    case 0:
+                        stage = 150;
+                        break;
+                    case 1:
+                        stage = 135;
+                        break;
+                    case 4:
+                        stage = 125;
+                        break;
+                }
             }
         }
+        else if(stage == 125){ //if 4 rings
+            driveTrainGoal = driveTrainEncoder - 4250;
+            driveTrain.arcadeDrive(0, -1, 0, false, false);
+            stage = 140;
+        }
+        else if(stage == 135){
+            driveTrainGoal = driveTrainEncoder - 4000;
+            driveTrain.arcadeDrive(0, -1, 1, false, false);
+            stage = 140;
+        }
+        else if(stage == 140){
+            if(driveTrainEncoder < driveTrainGoal) {
+                driveTrain.arcadeDrive(0, 0, 0, false, false);
+                stage = 150; //going to drop goal
+            }
+        }
+        else if(stage == 150) {
+            wobbleRelease.wobbleRelease();
+            expirationTime = runtime.time() + 2.0;
+            stage = 160;
+        }
+        else if(stage == 160){
+            if ( (runtime.time() > expirationTime)) {
+                switch (ringCount){
+                    case 0:
+                        break; //has no need to move back
+                    case 1:
+                        stage = 180;
+                        break;
+                    case 4:
+                        stage = 170;
+                        break;
+                }
+            }
+        }
+        else if(stage == 170){ // 1 ring
+            driveTrainGoal = driveTrainEncoder + 4000;
+            driveTrain.arcadeDrive(0, 1, 0, false, false);
+            stage = 190;
+        }
+        else if(stage == 180){ // 4 rings
+            driveTrainGoal = driveTrainEncoder + 2000;
+            driveTrain.arcadeDrive(0, 1, 0, false, false);
+            stage = 190;
+        }
+        else if(stage == 190){ //stopping
+            if(driveTrainEncoder > driveTrainGoal) {
+                driveTrain.arcadeDrive(0, 0, 0, false, false);
+                stage = 200;
+            }
+        }
+
 
 
 

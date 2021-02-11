@@ -33,7 +33,7 @@ public class RobotMap {
     public static final String POT_NAME = "pot";
     public static final DcMotor.Direction LEFT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
     public static final DcMotor.Direction RIGHT_ARM_DIRECTION = DcMotor.Direction.FORWARD;
-    public static final double ARM_SPEED_UP = 0.4;
+    public static final double ARM_SPEED_UP = 0.5;
     public static final double ARM_SPEED_DOWN = 0.3;
     public static final double AUTO_ARM_SPEED = 0.3;
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
