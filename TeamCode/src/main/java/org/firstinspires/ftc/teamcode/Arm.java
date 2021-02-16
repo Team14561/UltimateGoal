@@ -113,7 +113,8 @@ public class Arm {
             if (shooting){
                 double error = potValue - shootingPos;
                 power = RobotMap.kP_POT * error;
-                if (encoderValue < RobotMap.ARM_UP) power = Math.max(power, -0.1);
+                power = Math.max(power, 0.0);
+                power = Math.min(power, 0.9);
             }
             else {
                 double error = encoderGoal - encoderValue;

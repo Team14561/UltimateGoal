@@ -12,7 +12,7 @@ public class RingSenseAuton {
     private int stage = 0;
     private double expirationTime;
     private ElapsedTime runtime;
-    private HeightSensor heightSensor;
+    //private HeightSensor heightSensor;
     private Arm arm;
     private FlyWheel flyWheel;
     private PusherMotor pusherMotor;
@@ -33,7 +33,7 @@ public class RingSenseAuton {
                             Telemetry telemetry, ElapsedTime runtime){
         this.runtime = runtime;
         this.telemetry = telemetry;
-        heightSensor = new HeightSensor(hardwareMap,telemetry);
+        //heightSensor = new HeightSensor(hardwareMap,telemetry);
         arm = new Arm(hardwareMap, telemetry);
         driveTrain = new DriveTrain(hardwareMap, telemetry);
         flyWheel = new FlyWheel(hardwareMap, telemetry);
@@ -85,7 +85,7 @@ public class RingSenseAuton {
             }
         }
         else if (stage == 4) {
-            height = heightSensor.getHeight();
+            //height = heightSensor.getHeight();
             if (height < 100) {
                 ringNumber = 4;
                 stage = 8;
@@ -105,7 +105,7 @@ public class RingSenseAuton {
             }
         }
         else if (stage == 7) {
-            height = heightSensor.getHeight();
+            //height = heightSensor.getHeight();
             if (height < 9) {
                 ringNumber = 1;
                 stage = 8;

@@ -58,7 +58,7 @@ public class ShootingAuton {
     public void mainStages() {
         driveTrainEncoder = driveTrain.rightEncoder.getCurrentPosition();
 
-        arm.manual(armPower, armGotoShoot, false, RobotMap.POT_SHOOTING_POSITION + 0.01);
+        arm.manual(armPower, armGotoShoot, false, RobotMap.POT_SHOOTING_POSITION);
         colorSensor.broadcastColor();
 
         if(countRings){
@@ -110,7 +110,7 @@ public class ShootingAuton {
             }
         }
         else if(stage == 40){
-            driveTrainGoal = driveTrainEncoder - 3900;
+            driveTrainGoal = driveTrainEncoder - 3900; //60:1 gearbox value was 6100 * (2/3) = 4067
             driveTrain.arcadeDrive(0, -1, 0, false, false);
             stage = 50;
         }
