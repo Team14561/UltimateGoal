@@ -53,6 +53,8 @@ public class ArcadeDrive extends OpMode
     private PusherMotor pusher;
     //private HeightSensor heightSensor;
     private RingSensor ringSensor;
+    boolean powerShotGo = false;
+    private PowerShotAuton powerShotAuton;
 
 
     /*
@@ -67,6 +69,13 @@ public class ArcadeDrive extends OpMode
         pusher = new PusherMotor(hardwareMap, telemetry);
         //heightSensor = new HeightSensor(hardwareMap, telemetry);
         ringSensor = new RingSensor(hardwareMap, telemetry);
+        powerShotAuton = new PowerShotAuton(arm,
+                 drivetrain,
+                 flywheel,
+                 pusher,
+                 sweeper,
+                 telemetry,
+                 runtime);
     }
 
     /*
@@ -90,14 +99,27 @@ public class ArcadeDrive extends OpMode
      */
     @Override
     public void loop() {
+        if(gamepad1.a){
+            powerShotGo = true;
+        }
 
-        drivetrain.arcadeDrive(gamepad1);
-        arm.manual(gamepad2);
-        flywheel.manual(gamepad2);
-        sweeper.buttonServo(gamepad2);
-        pusher.manual(gamepad2);
-        //heightSensor.broadcastHeight();
-        ringSensor.broadcastColor();
+
+        if(powerShotGo){
+            arm.manual(gamepad2);
+            double driveTrainEncoder = drivetrain.rightEncoder.getCurrentPosition();
+            int stage = powerShotAuton.powerShoot(60, driveTrainEncoder);
+            if(stage == 90){
+                powerShotGo = false;
+            }
+        } else {
+            drivetrain.arcadeDrive(gamepad1);
+            arm.manual(gamepad2);
+            flywheel.manual(gamepad2);
+            sweeper.buttonServo(gamepad2);
+            pusher.manual(gamepad2);
+            //heightSensor.broadcastHeight();
+            ringSensor.broadcastColor();
+        }
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {

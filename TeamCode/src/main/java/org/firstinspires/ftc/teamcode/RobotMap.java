@@ -39,7 +39,7 @@ public class RobotMap {
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
     public static final double kP = 0.06;
-    public static final double kP_POT = 60.0; // 20.0, 25.0
+    public static final double kP_POT = 25.0; // 20.0, 25.0
     public static final double ARM_UP = -300;
     public static final double ARM_DOWN = -1200; //-1000, -1200
     public static final double GRAVITY_AMPLITUDE = 1.18;
