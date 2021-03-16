@@ -50,11 +50,13 @@ public class ArcadeDrive extends OpMode
     private Arm arm;
     private FlyWheel flywheel;
     private Sweeper sweeper;
+    private WobbleArm wobbleArm;
     private PusherMotor pusher;
     //private HeightSensor heightSensor;
     private RingSensor ringSensor;
     boolean powerShotGo = false;
     private PowerShotAuton powerShotAuton;
+    private int stage = 60;
 
 
     /*
@@ -62,6 +64,7 @@ public class ArcadeDrive extends OpMode
      */
     @Override
     public void init() {
+        wobbleArm = new WobbleArm(hardwareMap, telemetry);
         drivetrain = new DriveTrain(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
         flywheel = new FlyWheel(hardwareMap,telemetry);
@@ -74,6 +77,7 @@ public class ArcadeDrive extends OpMode
                  flywheel,
                  pusher,
                  sweeper,
+                 wobbleArm,
                  telemetry,
                  runtime);
     }
@@ -99,16 +103,16 @@ public class ArcadeDrive extends OpMode
      */
     @Override
     public void loop() {
-        if(gamepad1.a){
+        if(gamepad1.y){
             powerShotGo = true;
         }
-
-
+        
         if(powerShotGo){
-            arm.manual(gamepad2);
+            arm.manual(0.0, true, false, RobotMap.POT_POWER_POSITION);
             double driveTrainEncoder = drivetrain.rightEncoder.getCurrentPosition();
-            int stage = powerShotAuton.powerShoot(60, driveTrainEncoder);
-            if(stage == 90){
+            stage = powerShotAuton.powerShoot(stage, driveTrainEncoder);
+            telemetry.addData("Stage", stage);
+            if(stage == 90 || gamepad1.x){
                 powerShotGo = false;
             }
         } else {
@@ -119,7 +123,10 @@ public class ArcadeDrive extends OpMode
             pusher.manual(gamepad2);
             //heightSensor.broadcastHeight();
             ringSensor.broadcastColor();
+            wobbleArm.manual(gamepad1);
+            stage = 60;
         }
+
 
         // Show the elapsed game time.
         if (RobotMap.DISPLAY_TIME) {

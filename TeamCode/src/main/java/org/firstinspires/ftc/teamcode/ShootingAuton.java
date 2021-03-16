@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.WobbleRelease;
 
 public class ShootingAuton {
 
+    private WobbleArm wobbleArm;
     private AnalogInput potentiometer;
     private int stage = 0;
     private double expirationTime;
@@ -45,6 +46,7 @@ public class ShootingAuton {
                          Telemetry telemetry, ElapsedTime runtime){
         this.runtime = runtime;
         this.telemetry = telemetry;
+        wobbleArm = new WobbleArm(hardwareMap, telemetry);
         arm = new Arm(hardwareMap, telemetry);
         driveTrain = new DriveTrain(hardwareMap, telemetry);
         flyWheel = new FlyWheel(hardwareMap, telemetry);

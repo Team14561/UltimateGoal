@@ -49,7 +49,7 @@ public class RobotMap {
     public static final double POT_ARM_UP = 1.03;
     public static final double POT_ARM_DOWN = 2.24;
     public static final double POT_SHOOTING_POSITION = 1.731;
-    public static final double POT_POWER_POSITION = 1.781;
+    public static final double POT_POWER_POSITION = 1.795;
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
@@ -81,9 +81,18 @@ public class RobotMap {
     public static final String HEIGHT_SENSOR = "height_sensor";
     public static final String COLOR_SENSOR = "color_sensor";
 
-    //Wobble Release Parameters
+    //Wobble RELEASE Parameters
     public static final String WOBBLE_SERVO = "wobble_release";
     public static final double WOBBLE_HOLD = 1.0;
     public static final double WOBBLE_RELEASE = 0.3;
 
+    //Wobble ARM Parameters
+    public static final String WOBBLE_ARM_1 = "wobble_arm_1";
+    public static final String WOBBLE_ARM_2 = "wobble_arm_2";
+    public static final double WARM1_OPEN = 0;
+    public static final double WARM1_CLOSE = .8;
+    public static final double WARM1_GRAB = .8;
+    public static final double WARM2_OPEN = 0;
+    public static final double WARM2_CLOSE = .9;
+    public static final double WARM2_GRAB = .3;
 }

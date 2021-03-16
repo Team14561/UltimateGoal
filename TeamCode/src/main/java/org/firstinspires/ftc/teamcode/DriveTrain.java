@@ -170,6 +170,8 @@ public class DriveTrain {
         arcadeDrive(gamepad.right_stick_x, gamepad.left_stick_y, gamepad.left_stick_x, gamepad.left_bumper, gamepad.right_bumper);
     }
 
+
+
     public void arcadeDrive(double rStickX, double lStickY, double lStickX, Boolean leftB, Boolean rightB){
         double rotation = rStickX;
         double leftPower = lStickY - rotation;
@@ -190,8 +192,6 @@ public class DriveTrain {
         else if (rightB){
             highSpeed = true;
         }
-
-
 
         mecanumDrive(leftPower, rightPower, strafeValue);
 

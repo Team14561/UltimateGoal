@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class PowerShotAuton {
 
+    private WobbleArm wobbleArm;
     private AnalogInput potentiometer;
     private int stage = 0;
     private double expirationTime;
@@ -39,8 +40,9 @@ public class PowerShotAuton {
                           FlyWheel flyWheel,
                           PusherMotor pusherMotor,
                           Sweeper sweeper,
+                          WobbleArm wobbleArm,
                           Telemetry telemetry,
-                          ElapsedTime runtime){
+                          ElapsedTime runtime) {
         this.runtime = runtime;
         this.telemetry = telemetry;
         this.arm = arm;
@@ -51,8 +53,9 @@ public class PowerShotAuton {
 
 
     }
+
     public PowerShotAuton(HardwareMap hardwareMap,
-                          Telemetry telemetry, ElapsedTime runtime){
+                          Telemetry telemetry, ElapsedTime runtime) {
         this.runtime = runtime;
         this.telemetry = telemetry;
         arm = new Arm(hardwareMap, telemetry);
@@ -60,6 +63,7 @@ public class PowerShotAuton {
         flyWheel = new FlyWheel(hardwareMap, telemetry);
         pusherMotor = new PusherMotor(hardwareMap, telemetry);
         sweeper = new Sweeper(hardwareMap, telemetry);
+        wobbleArm = new WobbleArm(hardwareMap, telemetry);
         wobbleRelease = new WobbleRelease(hardwareMap, telemetry);
         colorSensor = new RingSensor(hardwareMap, telemetry);
 
@@ -87,7 +91,7 @@ public class PowerShotAuton {
                 }
             }
         }
-        telemetry.addData("encoder difference:", encoderDiff);
+        telemetry.addData("stage:", stage);
         telemetry.addData("Ring Number: ", ringCount);
         telemetry.addData("arm power: ", armPower);
 
@@ -142,13 +146,12 @@ public class PowerShotAuton {
                 driveTrain.arcadeDrive(0, 0, 0, false, false);
                 stage = 103;
             }
-        }
-        else if(stage == 103){
-            driveTrainGoal = driveTrainEncoder - 200;
+        } else if (stage == 103) {
+            driveTrainGoal = driveTrainEncoder + 400;
             driveTrain.arcadeDrive(0, 0, -.7, false, false);
             stage = 107;
         } else if (stage == 107) {
-            if (driveTrainEncoder < driveTrainGoal) {
+            if (driveTrainEncoder > driveTrainGoal) {
                 driveTrain.arcadeDrive(0, 0, 0, false, false);
                 stage = 110;
             }
@@ -219,96 +222,101 @@ public class PowerShotAuton {
             }
         }
     }
-        private int powerShoot(int level){
-            return powerShoot(level, driveTrainEncoder);
 
+
+    private int powerShoot(int level) {
+        return powerShoot(level, driveTrainEncoder);
+    }
+
+
+    public int powerShoot(int level, double driveEncoder){
+        driveTrainEncoder = driveEncoder;
+        double turnSpeed = .25;
+
+        if(level == 60) {
+            driveTrainGoal = driveTrainEncoder + 340; //TURNING 1
+            driveTrain.arcadeDrive(turnSpeed, 0, 0, false, true);
+            level = 65;
         }
-        public int powerShoot(int level, double driveEncoder){
-            driveTrainEncoder = driveEncoder;
-            if(level == 60) {
-                driveTrainGoal = driveTrainEncoder + 360; //TURNING 1
-                driveTrain.arcadeDrive(.2, 0, 0, false, false);
-                level = 65;
+        else if(level == 65){
+            if(driveTrainEncoder > driveTrainGoal){
+                driveTrain.arcadeDrive(0, 0, 0, false, true);
+                level = 70;
             }
-            else if(level == 65){
-                if(driveTrainEncoder > driveTrainGoal){
-                    driveTrain.arcadeDrive(0, 0, 0, false, false);
-                    level = 70;
-                }
-            }
-            else if(level == 70){
-                pusherGoal = pusherMotor.getEncoder() + 228; ////   SHOOTING 1
-                pusherMotor.manual(1, 0.0, false);
-                level = 71;
-            }
-            else if(level == 71){
-                if(pusherMotor.getEncoder() > pusherGoal){
-                    pusherMotor.manual(0.0, 0.0, false);
-                    level = 72;
-                }
-            }
-            else if(level == 72){
-                driveTrainGoal = driveTrainEncoder + 70;//// TURNING 2
-                driveTrain.arcadeDrive(.2, 0, 0, false, false);
-                level = 73;
-            }
-            else if(level == 73){
-                if(driveTrainEncoder > driveTrainGoal){
-                    driveTrain.arcadeDrive(0, 0, 0, false, false);
-                    level = 74;
-                }
-            }
-            else if(level == 74){
-                pusherGoal = pusherMotor.getEncoder() + 228; ////   SHOOTING 2
-                pusherMotor.manual(1, 0.0, false);
-                level = 75;
-            }
-            else if(level == 75){
-                if(pusherMotor.getEncoder() > pusherGoal){
-                    pusherMotor.manual(0.0, 0.0, false);
-                    level = 77;
-                }
-            }
-            else if(level == 77){
-                driveTrainGoal = driveTrainEncoder + 130;//// TURNING 3
-                driveTrain.arcadeDrive(.2, 0, 0, false, false);
-                level = 78;
-            }
-            else if(level == 78){
-                if(driveTrainEncoder > driveTrainGoal){
-                    driveTrain.arcadeDrive(0, 0, 0, false, false);
-                    level = 79;
-                }
-            }
-            else if(level == 79){
-                pusherGoal = pusherMotor.getEncoder() + 228; ////   SHOOTING 3
-                pusherMotor.manual(1, 0.0, false);
-                level = 80;
-            }
-            else if(level == 80){
-                if(pusherMotor.getEncoder() > pusherGoal){
-                    pusherMotor.manual(0.0, 0.0, false);
-                    level = 81;
-                }
-            }
-            else if(level == 81){
-                flyWheel.manual(false, false, true);
-                pusherMotor.manual(0, 0, true);
-                level = 83;
-            }
-            else if(level == 83){
-                driveTrainGoal = driveTrainEncoder - 550;//// TURNING BACK
-                driveTrain.arcadeDrive(-.3, 0, 0, false, false);
-                level = 85;
-            }
-            else if(level == 85){
-                if(driveTrainEncoder < driveTrainGoal){
-                    driveTrain.arcadeDrive(0, 0, 0, false, false);
-                    level = 90; //ihebnibge
-                }
-            }
-            return level;
         }
+        else if(level == 70){
+            pusherGoal = pusherMotor.getEncoder() + 228; ////   SHOOTING 1
+            pusherMotor.manual(1, 0.0, false);
+            level = 71;
+        }
+        else if(level == 71){
+            if(pusherMotor.getEncoder() > pusherGoal){
+                pusherMotor.manual(0.0, 0.0, false);
+                level = 72;
+            }
+        }
+        else if(level == 72){
+            driveTrainGoal = driveTrainEncoder + 120;//// TURNING 2
+            driveTrain.arcadeDrive(turnSpeed, 0, 0, false, true);
+            level = 73;
+        }
+        else if(level == 73){
+            if(driveTrainEncoder > driveTrainGoal){
+                driveTrain.arcadeDrive(0, 0, 0, false, true);
+                level = 74;
+            }
+        }
+        else if(level == 74){
+            pusherGoal = pusherMotor.getEncoder() + 228; ////   SHOOTING 2
+            pusherMotor.manual(1, 0.0, false);
+            level = 75;
+        }
+        else if(level == 75){
+            if(pusherMotor.getEncoder() > pusherGoal){
+                pusherMotor.manual(0.0, 0.0, false);
+                level = 77;
+            }
+        }
+        else if(level == 77){
+            driveTrainGoal = driveTrainEncoder + 130;//// TURNING 3
+            driveTrain.arcadeDrive(turnSpeed, 0, 0, false, true);
+            level = 78;
+        }
+        else if(level == 78){
+            if(driveTrainEncoder > driveTrainGoal){
+                driveTrain.arcadeDrive(0, 0, 0, false, true);
+                level = 79;
+            }
+        }
+        else if(level == 79){
+            pusherGoal = pusherMotor.getEncoder() + 200; ////   SHOOTING 3
+            pusherMotor.manual(1, 0.0, false);
+            level = 80;
+        }
+        else if(level == 80){
+            if(pusherMotor.getEncoder() > pusherGoal){
+                pusherMotor.manual(0.0, 0.0, false);
+                level = 81;
+            }
+        }
+        else if(level == 81){
+            flyWheel.manual(false, false, true);
+            pusherMotor.manual(0, 0, true);
+            level = 83;
+        }
+        else if(level == 83){
+            driveTrainGoal = driveTrainEncoder - 550;//// TURNING BACK
+            driveTrain.arcadeDrive(-.3, 0, 0, false, true);
+            level = 85;
+        }
+        else if(level == 85){
+            if(driveTrainEncoder < driveTrainGoal){
+                driveTrain.arcadeDrive(0, 0, 0, false, true);
+                level = 90; //ihebnibge
+            }
+        }
+        return level;
+    }
 
 
 
