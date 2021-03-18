@@ -49,13 +49,13 @@ public class RobotMap {
     public static final double POT_ARM_UP = 1.03;
     public static final double POT_ARM_DOWN = 2.24;
     public static final double POT_SHOOTING_POSITION = 1.731;
-    public static final double POT_POWER_POSITION = 1.795;
+    public static final double POT_POWER_POSITION = 1.735; //1.792
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";
     public static final DcMotor.Direction FLYWHEEL_DIRECTION = DcMotor.Direction.FORWARD;
     public static final double FLYWHEEL_SPEED_IN = 0.24;
-    public static final double FLYWHEEL_SPEED_OUT = -0.48;
+    public static final double FLYWHEEL_SPEED_OUT = -0.43; //-.48
     public static final int REVERSE_FLYWHEEL_ENCODER_VALUE = -1;
 
     //Sweeper Parameters
