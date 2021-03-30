@@ -96,7 +96,7 @@ public class PowerShotAuton {
         telemetry.addData("arm power: ", armPower);
         if(stage == 0){
             driveTrainGoal = driveTrainEncoder - 30; //60:1 gearbox value was 6100 * (2/3) = 4067 //4175
-            driveTrain.arcadeDrive(0, 0, .7, false, false);
+            driveTrain.arcadeDrive(0, 0, .4, false, false);
             stage = 1;
         }
         else if(stage == 1){
@@ -127,7 +127,7 @@ public class PowerShotAuton {
             }
         } else if (stage == 40) {
             flyWheel.manual(false, true, false);
-            driveTrainGoal = driveTrainEncoder - 4100; //60:1 gearbox value was 6100 * (2/3) = 4067 //4175
+            driveTrainGoal = driveTrainEncoder - 4200; //60:1 gearbox value was 6100 * (2/3) = 4067 //4175
             driveTrain.arcadeDrive(0, -.7, 0, false, false);
             stage = 50;
         } else if (stage == 50) {
@@ -143,7 +143,7 @@ public class PowerShotAuton {
         }
         else if(stage == 57){
             driveTrainGoal = driveTrainEncoder + 30; //60:1 gearbox value was 6100 * (2/3) = 4067 //4175
-            driveTrain.arcadeDrive(0, 0, -.7, false, false);
+            driveTrain.arcadeDrive(0, 0, -.4, false, false);
             stage = 58;
         }
         else if(stage == 58){
@@ -156,7 +156,7 @@ public class PowerShotAuton {
             stage = powerShoot(stage);
 
         } else if (stage == 90) {
-            driveTrainGoal = driveTrainEncoder - 2800;
+            driveTrainGoal = driveTrainEncoder - 2800; //2800
             driveTrain.arcadeDrive(0, -1, 0, false, false);
             stage = 100;
         } else if (stage == 100) {
