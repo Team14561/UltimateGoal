@@ -85,15 +85,20 @@ public class Arm {
     public void manual(Gamepad gamepad) {
         // Get joystick values from gamepad
         double power  = gamepad.left_stick_y * RobotMap.REVERSE_ARM_DIRECTION;
+        boolean override = gamepad.left_stick_button;
 
-        manual(power, gamepad.y, gamepad.back);
+        manual(power, gamepad.y, gamepad.back, RobotMap.POT_SHOOTING_POSITION, override);
     }
 
     public void manual (double power, boolean yPressed, boolean back) {
         manual(power, yPressed, back, RobotMap.POT_SHOOTING_POSITION);
     }
 
-    public void manual(double power, boolean yPressed, boolean back, double shootingPos) {
+    public void manual(double power, boolean yPressed, boolean back, double shootingPos){
+        manual(power, yPressed, back, shootingPos, false);
+    }
+
+    public void manual(double power, boolean yPressed, boolean back, double shootingPos, boolean override) {
         double encoderValue = getEncoder();
         double potValue = getPot();
         previousEncoder = encoderValue;
@@ -125,18 +130,20 @@ public class Arm {
             shooting = false;
             encoderGoal = encoderValue;
             double gravityCorrection = 0.0;
+            if(!override){
+                if ((power < 0) && (encoderValue < RobotMap.ARM_UP)) {
 
-            if ((power < 0) && (encoderValue < RobotMap.ARM_UP)) {
+                    //Sinusoidal gravity correction
+                    gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
+                            (RobotMap.ARM_UP - encoderValue) /
+                            (RobotMap.ARM_UP - RobotMap.ARM_DOWN) );
+                }
+                else if (power > 0 && (encoderValue > RobotMap.ARM_UP)) {
+                    gravityCorrection = -RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
+                            (RobotMap.ARM_UP - encoderValue) / RobotMap.ARM_UP);
+                }
+            }
 
-                //Sinusoidal gravity correction
-                gravityCorrection = RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
-                        (RobotMap.ARM_UP - encoderValue) /
-                        (RobotMap.ARM_UP - RobotMap.ARM_DOWN) );
-            }
-            else if (power > 0 && (encoderValue > RobotMap.ARM_UP)) {
-                gravityCorrection = -RobotMap.GRAVITY_AMPLITUDE * Math.sin( (Math.PI / 2) *
-                        (RobotMap.ARM_UP - encoderValue) / RobotMap.ARM_UP);
-            }
             power += gravityCorrection;
         }
 

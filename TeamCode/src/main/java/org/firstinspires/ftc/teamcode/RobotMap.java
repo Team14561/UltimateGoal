@@ -39,7 +39,7 @@ public class RobotMap {
     public static final int REVERSE_ARM_ENCODER_VALUE = -1;
     public static final int REVERSE_ARM_DIRECTION  = -1;
     public static final double kP = 0.06;
-    public static final double kP_POT = 25.0; // 20.0, 25.0
+    public static final double kP_POT = 30.0; // 20.0, 25.0
     public static final double ARM_UP = -300;
     public static final double ARM_DOWN = -1200; //-1000, -1200
     public static final double GRAVITY_AMPLITUDE = 1.18;
@@ -48,8 +48,8 @@ public class RobotMap {
     public static final int ONE_RING_HEIGHT = -950;
     public static final double POT_ARM_UP = 1.03;
     public static final double POT_ARM_DOWN = 2.24;
-    public static final double POT_SHOOTING_POSITION = 1.731; //1.731 1.708
-    public static final double POT_POWER_POSITION = 1.770; //1.792 1.735
+    public static final double POT_SHOOTING_POSITION = 1.706; //1.731 1.708
+    public static final double POT_POWER_POSITION = 1.730; //1.792 1.735 1.770
 
     //FlyWheel Parameters
     public static final String FLYWHEEL_MOTOR = "flywheel_motor";

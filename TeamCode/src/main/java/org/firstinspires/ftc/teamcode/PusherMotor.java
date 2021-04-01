@@ -45,6 +45,9 @@ public class PusherMotor {
      * @param gamepad The gamepad from which to read joystick values
      */
     public void manual(Gamepad gamepad) {
+
+        if (gamepad.back) encoderStart = getEncoder();
+
         manual(gamepad.right_trigger, gamepad.left_trigger, gamepad.left_bumper);
     }
     public void manual(double right_trigger, double left_trigger, Boolean left_bumper){

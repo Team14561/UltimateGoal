@@ -156,7 +156,18 @@ public class ShootingAuton {
             armGotoShoot = false;
             armPower = 1.0;
             pusherMotor.manual(0.0, 0.0, true);
-            stage = 120;
+            stage = 115;
+        }
+        else if(stage == 115){
+            driveTrainGoal = driveTrainEncoder + 400;
+            driveTrain.arcadeDrive(0, 0, -.7, false, false);
+            stage = 117;
+        }
+        else if(stage == 117){
+            if(driveTrainEncoder > driveTrainGoal){
+                driveTrain.arcadeDrive(0, 0, 0, false, false);
+                stage = 120;
+            }
         }
         else if (stage == 120) {
             if (arm.getEncoder() > -100) {
